@@ -6,8 +6,11 @@
   "scenarioName": "Integration RSS",
   "blueprintPath": "Integration RSS.blueprint.json",
   "scheduling": {
-    "type": "on-demand"
+    "type": "monthly",
+    "days": [1],
+    "time": "09:00"
   },
+  "scheduleTimezone": "Asia/Kolkata",
   "sourceZone": "us2.make.com",
   "secrets": {
     "dataStoreId": 113753,
@@ -22,7 +25,7 @@
     "apiVersion": "2024-10-21",
     "region": "eastus"
   },
-  "notes": "Set OPENAI_API_KEY and AZURE_OPENAI_DEPLOYMENT in .env before npm run push.",
+  "notes": "Set OPENAI_API_KEY and AZURE_OPENAI_DEPLOYMENT in .env before npm run push. Monthly schedule fires on the 1st at 09:00 in the Make organization timezone (set org timezone to Asia/Kolkata for IST).",
   "googleSheets": {
     "spreadsheetName": "Integration RSS - Trend Brief",
     "spreadsheetId": "1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg",

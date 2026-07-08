@@ -1,0 +1,139 @@
+{
+  "defaults": {
+    "maxResultsTier1": 6,
+    "maxResultsTier2": 4,
+    "maxResultsTier3": 4,
+    "maxResultsTier4": 3,
+    "filterDateFrom": "{{addDays(now; -30)}}"
+  },
+  "feeds": [
+    {
+      "id": 1,
+      "aggId": 7,
+      "name": "Construction Dive",
+      "url": "https://www.constructiondive.com/feeds/news/",
+      "tier": 1,
+      "sourceType": "industry",
+      "enabled": true
+    },
+    {
+      "id": 2,
+      "aggId": 23,
+      "name": "Data Center Dynamics",
+      "url": "https://www.datacenterdynamics.com/en/atom/",
+      "tier": 1,
+      "sourceType": "industry",
+      "enabled": true
+    },
+    {
+      "id": 3,
+      "aggId": 24,
+      "name": "ENR",
+      "url": "https://www.enr.com/rss/articles",
+      "tier": 1,
+      "sourceType": "industry",
+      "enabled": true,
+      "allowValidationFailure": true,
+      "validationNote": "ENR blocks automated fetchers (HTTP 403); verify via Make RSS module on push/run."
+    },
+    {
+      "id": 4,
+      "aggId": 25,
+      "name": "Data Center Knowledge",
+      "url": "https://www.datacenterknowledge.com/rss.xml",
+      "tier": 1,
+      "sourceType": "industry",
+      "enabled": true
+    },
+    {
+      "id": 5,
+      "aggId": 26,
+      "name": "BDC Network",
+      "url": "https://www.bdcnetwork.com/rss.xml",
+      "tier": 2,
+      "sourceType": "industry",
+      "enabled": false
+    },
+    {
+      "id": 6,
+      "aggId": 27,
+      "name": "Construction Exec",
+      "url": "https://www.constructionexec.com/rss",
+      "tier": 2,
+      "sourceType": "industry",
+      "enabled": false
+    },
+    {
+      "id": 7,
+      "aggId": 28,
+      "name": "The Construction Index",
+      "url": "https://www.theconstructionindex.co.uk/news/rss",
+      "tier": 2,
+      "sourceType": "industry",
+      "enabled": false
+    },
+    {
+      "id": 8,
+      "aggId": 29,
+      "name": "GlobeSt",
+      "url": "https://www.globest.com/feed/",
+      "tier": 2,
+      "sourceType": "industry",
+      "enabled": false
+    },
+    {
+      "id": 9,
+      "aggId": 30,
+      "name": "Autodesk Blog",
+      "url": "https://blog.autodesk.com/feed/",
+      "tier": 3,
+      "sourceType": "vendor",
+      "enabled": false
+    },
+    {
+      "id": 10,
+      "aggId": 31,
+      "name": "Trimble News",
+      "url": "https://www.trimble.com/en/news/rss",
+      "tier": 3,
+      "sourceType": "vendor",
+      "enabled": false
+    },
+    {
+      "id": 11,
+      "aggId": 32,
+      "name": "Bentley News",
+      "url": "https://www.bentley.com/en/about-us/news/rss",
+      "tier": 3,
+      "sourceType": "vendor",
+      "enabled": false
+    },
+    {
+      "id": 12,
+      "aggId": 33,
+      "name": "Construction Dive Technology",
+      "url": "https://www.constructiondive.com/topic/technology/feed/",
+      "tier": 4,
+      "sourceType": "industry",
+      "enabled": false
+    },
+    {
+      "id": 13,
+      "aggId": 34,
+      "name": "For Construction Pros",
+      "url": "https://www.forconstructionpros.com/rss",
+      "tier": 4,
+      "sourceType": "industry",
+      "enabled": false
+    },
+    {
+      "id": 14,
+      "aggId": 35,
+      "name": "Buildings.com",
+      "url": "https://www.buildings.com/rss",
+      "tier": 4,
+      "sourceType": "industry",
+      "enabled": false
+    }
+  ]
+}

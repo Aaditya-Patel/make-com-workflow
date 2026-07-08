@@ -2,34 +2,169 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const blueprintPath = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "..",
-  "Integration RSS.blueprint.json"
-);
+const rootDir = join(dirname(fileURLToPath(import.meta.url)), "..");
+const blueprintPath = join(rootDir, "Integration RSS.blueprint.json");
+const feedsConfigPath = join(rootDir, "feeds.config.json");
 
-const MAX_RESULTS_PER_FEED = "12";
+const TAIL_MODULE_IDS = [8, 18, 19, 20, 21];
+const HEAD_MODULE_IDS = [14, 9];
 
-// The rss:ActionReadArticles module outputs fields keyed title / url /
-// dateCreated / summary. Inside a TextAggregator each row must reference the
-// FEEDER module explicitly (bare {{title}} does not resolve -> blank text).
-const aggValue = (feederId) =>
-  `Title: {{${feederId}.title}}\nURL: {{${feederId}.url}}\nDate: {{${feederId}.dateCreated}}\nSummary: {{${feederId}.summary}}\n---`;
+function loadFeedsConfig() {
+  return JSON.parse(readFileSync(feedsConfigPath, "utf8"));
+}
+
+function maxResultsForTier(defaults, tier) {
+  switch (tier) {
+    case 1:
+      return String(defaults.maxResultsTier1 ?? 6);
+    case 2:
+      return String(defaults.maxResultsTier2 ?? 4);
+    case 3:
+      return String(defaults.maxResultsTier3 ?? 4);
+    case 4:
+      return String(defaults.maxResultsTier4 ?? 3);
+    default:
+      return "6";
+  }
+}
+
+function aggValue(feed) {
+  return [
+    `Source: ${feed.name} (Tier ${feed.tier}, ${feed.sourceType})`,
+    `Title: {{${feed.id}.title}}`,
+    `URL: {{${feed.id}.url}}`,
+    `Date: {{${feed.id}.dateCreated}}`,
+    `Summary: {{${feed.id}.summary}}`,
+    "---",
+  ].join("\n");
+}
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function createRssModule(feed, template, designerX) {
+  const module = cloneJson(template);
+  module.id = feed.id;
+  module.mapper = {
+    url: feed.url,
+    gzip: true,
+    password: "",
+    username: "",
+    maxResults: feed.maxResults,
+    filterDateFrom: feed.filterDateFrom,
+  };
+  delete module.mapper.filterDateTo;
+  module.module = "rss:ActionReadArticles";
+  module.version = 4;
+  module.metadata = module.metadata ?? {};
+  module.metadata.designer = { x: designerX, y: 0 };
+  module.parameters = { include: [] };
+  return module;
+}
+
+function createAggregator(feed, designerX) {
+  return {
+    id: feed.aggId,
+    module: "util:TextAggregator",
+    version: 1,
+    mapper: { value: aggValue(feed) },
+    parameters: { feeder: feed.id, rowSeparator: "" },
+    metadata: {
+      designer: { x: designerX, y: 0 },
+      restore: {
+        extra: {
+          feeder: {
+            label: `RSS - Retrieve RSS feed items [${feed.id}]`,
+          },
+        },
+        parameters: {
+          rowSeparator: { label: "Empty" },
+        },
+      },
+      expect: [{ name: "value", type: "text", label: "Text" }],
+      parameters: [
+        {
+          name: "rowSeparator",
+          type: "select",
+          label: "Row separator",
+          validate: { enum: ["\n", "\t", "other"] },
+        },
+      ],
+    },
+  };
+}
+
+function buildArticleBatch(enabledFeeds) {
+  return enabledFeeds
+    .map((feed) => `{{escapeJSON(${feed.aggId}.text)}}`)
+    .join("\\n");
+}
+
+function updatePrompt(http, enabledFeeds) {
+  const body = JSON.parse(http.mapper.jsonStringBodyContent);
+  let prompt = body.messages[0].content;
+  const articleBatch = buildArticleBatch(enabledFeeds);
+
+  if (/ARTICLE BATCH:\\n/.test(prompt)) {
+    prompt = prompt.replace(
+      /ARTICLE BATCH:\\n(?:\{\{escapeJSON\(\d+\.text\)\}\}\\n?)*/,
+      `ARTICLE BATCH:\\n${articleBatch}`
+    );
+  } else {
+    prompt = prompt.replace(
+      "{{escapeJSON(7.text)}}",
+      articleBatch.replace(/\\n/g, "\n")
+    );
+  }
+
+  const vendorRule =
+    "- Articles tagged sourceType vendor in the batch are vendor-published. Flag them in source_credibility and deprioritize unless they cite independent third-party deployments.";
+  if (enabledFeeds.some((feed) => feed.sourceType === "vendor")) {
+    if (!prompt.includes("sourceType vendor")) {
+      prompt = prompt.replace(
+        "- Flag all vendor-published figures clearly.",
+        `- Flag all vendor-published figures clearly.\n${vendorRule}`
+      );
+    }
+  }
+
+  if (!prompt.includes("Return at least 5 items")) {
+    prompt = prompt.replace(
+      "- Do not fabricate deployments. If an article does not confirm a named deployment, do not include it.",
+      "- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives."
+    );
+  }
+
+  body.messages[0].content = prompt;
+  http.mapper.jsonStringBodyContent = JSON.stringify(body);
+}
+
+const feedsConfig = loadFeedsConfig();
+const enabledFeeds = feedsConfig.feeds
+  .filter((feed) => feed.enabled)
+  .map((feed) => ({
+    ...feed,
+    maxResults: maxResultsForTier(feedsConfig.defaults, feed.tier),
+    filterDateFrom:
+      feedsConfig.defaults.filterDateFrom ?? "{{addDays(now; -30)}}",
+  }));
+
+if (enabledFeeds.length === 0) {
+  throw new Error("No enabled feeds in feeds.config.json");
+}
 
 const blueprint = JSON.parse(readFileSync(blueprintPath, "utf8"));
 const flow = blueprint.flow;
 
-const runAtVar = flow.find((m) => m.id === 14); // Set variable
-const feedA = flow.find((m) => m.id === 1); // constructiondive
-const feedB = flow.find((m) => m.id === 2); // datacenterdynamics
-const aggA = flow.find((m) => m.id === 7); // TextAggregator
-const http = flow.find((m) => m.id === 8);
+const runAtVar = flow.find((module) => module.id === 14);
+const http = flow.find((module) => module.id === 8);
+const rssTemplate = flow.find((module) => module.id === 1);
 
-if (!runAtVar || !feedA || !feedB || !aggA || !http) {
-  throw new Error("Modules 14, 1, 2, 7, and 8 are required.");
+if (!runAtVar || !http || !rssTemplate) {
+  throw new Error("Modules 14, 1, and 8 are required.");
 }
 
-// 1. Stamp run timestamp once so all appended rows share it.
 runAtVar.mapper.name = "RunAt";
 runAtVar.mapper.scope = "roundtrip";
 runAtVar.mapper.value = '{{formatDate(now; "YYYY-MM-DD HH:mm:ss")}}';
@@ -38,90 +173,50 @@ if (Array.isArray(runAtVar.metadata?.interface) && runAtVar.metadata.interface[0
   runAtVar.metadata.interface[0].label = "RunAt";
 }
 
-// 2. Pull more articles from each feed so the model has real evidence to rank.
-feedA.mapper.maxResults = MAX_RESULTS_PER_FEED;
-feedB.mapper.maxResults = MAX_RESULTS_PER_FEED;
+const enabledFeedIds = new Set(enabledFeeds.map((feed) => feed.id));
+const enabledAggIds = new Set(enabledFeeds.map((feed) => feed.aggId));
+const reservedIds = new Set([
+  ...HEAD_MODULE_IDS,
+  ...TAIL_MODULE_IDS,
+  ...enabledFeedIds,
+  ...enabledAggIds,
+]);
 
-// filterDateTo was set to {{14.Date}} (= today at midnight) which excludes
-// articles published later the same day. Drop the upper bound so RSS results
-// are consistent whether the scenario is triggered from the UI or CLI.
-delete feedA.mapper.filterDateTo;
-delete feedB.mapper.filterDateTo;
+const preservedModules = flow.filter((module) => reservedIds.has(module.id));
+const preservedById = new Map(preservedModules.map((module) => [module.id, module]));
 
-// 3. Aggregator 7 now collapses FEED A (module 1) into a single text bundle.
-aggA.parameters = { ...aggA.parameters, feeder: 1, rowSeparator: "" };
-aggA.mapper.value = aggValue(1);
-if (aggA.metadata?.restore?.extra?.feeder) {
-  aggA.metadata.restore.extra.feeder.label = "RSS - Retrieve RSS feed items [1]";
-}
-aggA.metadata = aggA.metadata ?? {};
-aggA.metadata.designer = { x: 600, y: 0 };
+const feedModules = [];
+const aggModules = [];
+enabledFeeds.forEach((feed, index) => {
+  const designerX = index * 600;
+  feedModules.push(createRssModule(feed, rssTemplate, designerX));
+  aggModules.push(createAggregator(feed, designerX + 300));
+});
 
-// 4. Add a second aggregator (id 23) that collapses FEED B (module 2).
-let aggB = flow.find((m) => m.id === 23);
-if (!aggB) {
-  aggB = { id: 23 };
-  flow.push(aggB);
-}
-aggB.module = "util:TextAggregator";
-aggB.version = 1;
-aggB.mapper = { value: aggValue(2) };
-aggB.parameters = { feeder: 2, rowSeparator: "" };
-aggB.metadata = {
-  designer: { x: 1200, y: 0 },
-  restore: {
-    extra: { feeder: { label: "RSS - Retrieve RSS feed items [2]" } },
-    parameters: { rowSeparator: { label: "Empty" } },
-  },
-  expect: [{ name: "value", type: "text", label: "Text" }],
-  parameters: [
-    {
-      name: "rowSeparator",
-      type: "select",
-      label: "Row separator",
-      validate: { enum: ["\n", "\t", "other"] },
-    },
-  ],
-};
+updatePrompt(http, enabledFeeds);
 
-// 5. Rewire the prompt: include BOTH aggregated feeds and relax the strict
-//    "exclude unless confirmed" rule so the model actually returns rows.
-const body = JSON.parse(http.mapper.jsonStringBodyContent);
-let prompt = body.messages[0].content;
+const tailModules = TAIL_MODULE_IDS.map((id) => preservedById.get(id)).filter(Boolean);
+const headModules = HEAD_MODULE_IDS.map((id) => preservedById.get(id)).filter(Boolean);
 
-prompt = prompt.replace(
-  /ARTICLE BATCH:\\n\{\{escapeJSON\(7\.text\)\}\}(\\n\{\{escapeJSON\(23\.text\)\}\})?/,
-  "ARTICLE BATCH:\\n{{escapeJSON(7.text)}}\\n{{escapeJSON(23.text)}}"
-);
-// Fallback if the exact anchor above changed.
-if (!prompt.includes("{{escapeJSON(23.text)}}")) {
-  prompt = prompt.replace(
-    "{{escapeJSON(7.text)}}",
-    "{{escapeJSON(7.text)}}\\n{{escapeJSON(23.text)}}"
-  );
+const orderedModules = [];
+for (const feed of enabledFeeds) {
+  orderedModules.push(feedModules.find((module) => module.id === feed.id));
+  orderedModules.push(aggModules.find((module) => module.id === feed.aggId));
 }
 
-prompt = prompt.replace(
-  "- Do not fabricate deployments. If an article does not confirm a named deployment, do not include it.",
-  "- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives."
-);
-
-body.messages[0].content = prompt;
-http.mapper.jsonStringBodyContent = JSON.stringify(body);
-
-// 6. Enforce the correct execution order: 14, 9, 1, 7(aggA), 2, 23(aggB), 8, ...
-const order = [14, 9, 1, 7, 2, 23, 8, 18, 19, 20, 21];
 blueprint.flow = [
-  ...order.map((id) => flow.find((m) => m.id === id)).filter(Boolean),
-  ...flow.filter((m) => !order.includes(m.id)),
+  ...headModules,
+  ...orderedModules,
+  ...tailModules,
 ];
 
 writeFileSync(blueprintPath, `${JSON.stringify(blueprint, null, 4)}\n`, "utf8");
 
-console.log("Applied batch fix:");
-console.log(`  feed A (1) maxResults = ${feedA.mapper.maxResults}`);
-console.log(`  feed B (2) maxResults = ${feedB.mapper.maxResults}`);
-console.log("  aggregator 7 feeder = 1 (feed A)");
-console.log("  aggregator 23 feeder = 2 (feed B)  [new]");
-console.log("  prompt now includes {{7.text}} + {{23.text}} and relaxed rules");
-console.log(`  flow order: ${blueprint.flow.map((m) => m.id).join(", ")}`);
+console.log("Applied batch fix from feeds.config.json:");
+for (const feed of enabledFeeds) {
+  console.log(
+    `  feed ${feed.id} (${feed.name}) maxResults=${feed.maxResults} -> agg ${feed.aggId}`
+  );
+}
+console.log(`  prompt includes ${enabledFeeds.length} aggregated feed blocks`);
+console.log(`  flow order: ${blueprint.flow.map((module) => module.id).join(", ")}`);

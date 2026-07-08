@@ -116,3 +116,11 @@ export async function getScenarioBlueprint(scenarioId) {
   const response = await makeApiRequest(`/scenarios/${scenarioId}/blueprint`);
   return response.blueprint ?? response;
 }
+
+export async function getScenario(scenarioId) {
+  return makeApiRequest(`/scenarios/${scenarioId}`);
+}
+
+export async function startScenario(scenarioId) {
+  return makeApiRequest(`/scenarios/${scenarioId}/start`, { method: "POST" });
+}

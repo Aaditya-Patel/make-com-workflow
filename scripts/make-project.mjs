@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 import "./load-env.mjs";
 import {
   createScenario,
+  getScenario,
   getScenarioBlueprint,
+  startScenario,
   updateScenarioBlueprint,
 } from "./make-api.mjs";
 
@@ -170,6 +172,7 @@ try {
       await updateScenarioBlueprint({
         scenarioId,
         blueprint,
+        scheduling: config.scheduling,
         name: config.scenarioName,
       });
       console.log(`Pushed ${config.blueprintPath} -> scenario ${scenarioId}`);
@@ -218,6 +221,40 @@ try {
       console.log(`Created scenario ${scenarioId} (${config.scenarioName})`);
       console.log("Saved scenarioId to make.project.json");
       console.log(`Edit in browser: ${scenarioUrl(config, scenarioId)}`);
+      break;
+    }
+
+    case "activate": {
+      const scenarioId = requireScenarioId(config);
+      let started;
+      try {
+        started = await startScenario(scenarioId);
+      } catch (error) {
+        if (!/already running/i.test(error.message)) {
+          throw error;
+        }
+        console.log(`Scenario ${scenarioId} is already active.`);
+      }
+
+      if (started) {
+        const scenario = started.scenario ?? started;
+        console.log(`Activated scenario ${scenarioId}`);
+        if (scenario.isActive !== undefined) {
+          console.log(`isActive: ${scenario.isActive}`);
+        }
+      }
+
+      const details = await getScenario(scenarioId);
+      const current = details.scenario ?? details;
+      if (current.nextExec) {
+        console.log(`nextExec: ${current.nextExec}`);
+      }
+      if (current.scheduling) {
+        console.log(`scheduling: ${JSON.stringify(current.scheduling)}`);
+      }
+      console.log(
+        "Note: Schedule time uses your Make organization timezone. Set org timezone to Asia/Kolkata for 09:00 IST."
+      );
       break;
     }
 
@@ -283,7 +320,7 @@ try {
 
     default:
       console.error(
-        "Usage: node scripts/make-project.mjs <status|sync-account|open|pull|push|run|create|executions>"
+        "Usage: node scripts/make-project.mjs <status|sync-account|open|pull|push|run|create|executions|activate>"
       );
       process.exit(1);
   }
