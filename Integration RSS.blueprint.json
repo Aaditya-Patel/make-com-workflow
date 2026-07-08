@@ -1,0 +1,1651 @@
+{
+    "flow": [
+        {
+            "id": 14,
+            "mapper": {
+                "name": "RunAt",
+                "scope": "roundtrip",
+                "value": "{{formatDate(now; \"YYYY-MM-DD HH:mm:ss\")}}"
+            },
+            "module": "util:SetVariable2",
+            "version": 1,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "advanced": true,
+                "designer": {
+                    "x": -592,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "RunAt",
+                        "type": "any",
+                        "label": "RunAt"
+                    }
+                ]
+            },
+            "parameters": {}
+        },
+        {
+            "id": 9,
+            "mapper": {
+                "key": "x-api-key",
+                "returnWrapped": false
+            },
+            "module": "datastore:GetRecord",
+            "version": 1,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "key",
+                        "type": "text",
+                        "label": "Key",
+                        "required": true
+                    },
+                    {
+                        "name": "returnWrapped",
+                        "type": "boolean",
+                        "label": "Return Wrapped Output",
+                        "required": true
+                    }
+                ],
+                "restore": {
+                    "parameters": {
+                        "datastore": {
+                            "label": "Pipeline1"
+                        }
+                    }
+                },
+                "designer": {
+                    "x": -296,
+                    "y": 4
+                },
+                "interface": [
+                    {
+                        "help": "key value pair",
+                        "name": "value",
+                        "type": "text",
+                        "label": null,
+                        "default": null,
+                        "required": false,
+                        "multiline": false
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "datastore",
+                        "type": "datastore",
+                        "label": "Data store",
+                        "required": true
+                    }
+                ]
+            },
+            "parameters": {
+                "datastore": 113753
+            }
+        },
+        {
+            "id": 1,
+            "mapper": {
+                "url": "https://www.constructiondive.com/feeds/news/",
+                "gzip": true,
+                "password": "",
+                "username": "",
+                "maxResults": "12",
+                "filterDateFrom": "{{addDays(now; -30)}}"
+            },
+            "module": "rss:ActionReadArticles",
+            "version": 4,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "username",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "password",
+                        "type": "text",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "filterDateFrom",
+                        "type": "date",
+                        "label": "Date from"
+                    },
+                    {
+                        "name": "filterDateTo",
+                        "type": "date",
+                        "label": "Date to "
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of returned items",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    }
+                ],
+                "restore": {},
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "summary",
+                        "type": "text",
+                        "label": "Summary"
+                    },
+                    {
+                        "name": "author",
+                        "type": "text",
+                        "label": "Author"
+                    },
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                    },
+                    {
+                        "name": "dateUpdated",
+                        "type": "date",
+                        "label": "Date updated"
+                    },
+                    {
+                        "name": "dateCreated",
+                        "type": "date",
+                        "label": "Date created"
+                    },
+                    {
+                        "name": "comments",
+                        "type": "url",
+                        "label": "Comments"
+                    },
+                    {
+                        "name": "image",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Image"
+                    },
+                    {
+                        "name": "categories",
+                        "spec": {
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Categories"
+                    },
+                    {
+                        "name": "source",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Source"
+                    },
+                    {
+                        "name": "enclosures",
+                        "spec": [
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text",
+                                "label": "Type"
+                            },
+                            {
+                                "name": "length",
+                                "type": "number",
+                                "label": "Length"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Enclosures"
+                    },
+                    {
+                        "help": "Other RSS fields. All values are in text format.",
+                        "name": "rssFields",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "title"
+                            },
+                            {
+                                "name": "link",
+                                "type": "text",
+                                "label": "link"
+                            },
+                            {
+                                "name": "description",
+                                "type": "text",
+                                "label": "description"
+                            },
+                            {
+                                "name": "pubdate",
+                                "type": "text",
+                                "label": "pubdate"
+                            },
+                            {
+                                "name": "guid",
+                                "type": "text",
+                                "label": "guid"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "RSS fields"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include",
+                        "type": "select",
+                        "label": "Process RSS fields",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "google-merchant-center",
+                                "itunes"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "parameters": {
+                "include": []
+            }
+        },
+        {
+            "id": 7,
+            "mapper": {
+                "value": "Title: {{1.title}}\nURL: {{1.url}}\nDate: {{1.dateCreated}}\nSummary: {{1.summary}}\n---"
+            },
+            "module": "util:TextAggregator",
+            "version": 1,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "RSS - Retrieve RSS feed items [1]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "parameters": {
+                "feeder": 1,
+                "rowSeparator": ""
+            }
+        },
+        {
+            "id": 2,
+            "mapper": {
+                "url": "https://www.datacenterdynamics.com/en/atom/",
+                "gzip": true,
+                "password": "",
+                "username": "",
+                "maxResults": "12",
+                "filterDateFrom": "{{addDays(now; -30)}}"
+            },
+            "module": "rss:ActionReadArticles",
+            "version": 4,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "username",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "password",
+                        "type": "text",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "filterDateFrom",
+                        "type": "date",
+                        "label": "Date from"
+                    },
+                    {
+                        "name": "filterDateTo",
+                        "type": "date",
+                        "label": "Date to "
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of returned items",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    }
+                ],
+                "restore": {},
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "summary",
+                        "type": "text",
+                        "label": "Summary"
+                    },
+                    {
+                        "name": "author",
+                        "type": "text",
+                        "label": "Author"
+                    },
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                    },
+                    {
+                        "name": "dateUpdated",
+                        "type": "date",
+                        "label": "Date updated"
+                    },
+                    {
+                        "name": "dateCreated",
+                        "type": "date",
+                        "label": "Date created"
+                    },
+                    {
+                        "name": "comments",
+                        "type": "url",
+                        "label": "Comments"
+                    },
+                    {
+                        "name": "image",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Image"
+                    },
+                    {
+                        "name": "categories",
+                        "spec": {
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Categories"
+                    },
+                    {
+                        "name": "source",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Source"
+                    },
+                    {
+                        "name": "enclosures",
+                        "spec": [
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text",
+                                "label": "Type"
+                            },
+                            {
+                                "name": "length",
+                                "type": "number",
+                                "label": "Length"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Enclosures"
+                    },
+                    {
+                        "help": "Other RSS fields. All values are in text format.",
+                        "name": "rssFields",
+                        "spec": [],
+                        "type": "collection",
+                        "label": "RSS fields"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include",
+                        "type": "select",
+                        "label": "Process RSS fields",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "google-merchant-center",
+                                "itunes"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "parameters": {
+                "include": []
+            }
+        },
+        {
+            "id": 23,
+            "module": "util:TextAggregator",
+            "version": 1,
+            "mapper": {
+                "value": "Title: {{2.title}}\nURL: {{2.url}}\nDate: {{2.dateCreated}}\nSummary: {{2.summary}}\n---"
+            },
+            "parameters": {
+                "feeder": 2,
+                "rowSeparator": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "RSS - Retrieve RSS feed items [2]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "mapper": {
+                "url": "https://make-com.openai.azure.com/openai/deployments/gpt-5-mini/chat/completions?api-version=2024-10-21",
+                "method": "post",
+                "headers": [
+                    {
+                        "name": "api-key",
+                        "value": "{{9.value}}"
+                    },
+                    {
+                        "name": "content-type",
+                        "value": "application/json"
+                    }
+                ],
+                "timeout": "300",
+                "contentType": "json",
+                "inputMethod": "jsonString",
+                "shareCookies": false,
+                "parseResponse": true,
+                "allowRedirects": true,
+                "stopOnHttpError": true,
+                "jsonStringBodyContent": "{\"max_completion_tokens\":16000,\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"You are an AI intelligence analyst for a Head of AI at a data center construction company. You have been given a batch of recent articles from industry RSS feeds covering construction and data center technology news.\\n\\nARTICLE BATCH:\\n{{escapeJSON(7.text)}}\\\\n{{escapeJSON(23.text)}}\\n\\nYOUR TASK:\\nAnalyze all articles above and identify the Top 10 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.\\n\\nSCORING — rank each product on three dimensions, each out of 10:\\n- ADOPTION (1-10): How many named major contractors or owners are using it?\\n- ROI (1-10): How documented is the business outcome? Specific numbers score higher.\\n- RECENCY (1-10): How recent is the deployment or announcement?\\n\\nRULES:\\n- Only include products directly used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.\\n- Do not include data center operations tools used post-construction.\\n- Flag all vendor-published figures clearly.\\n- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives.\\n- Plain English throughout. No jargon. No superlatives.\\n- If fewer than 10 products are found in the article batch, return only what you find.\\n\\nOUTPUT FORMAT (mandatory):\\nReturn ONLY one valid JSON object. No markdown, no text before or after.\\nUse this exact schema:\\n{\\n  \\\"items\\\": [\\n    {\\n      \\\"rank\\\": 1,\\n      \\\"product\\\": \\\"Product name and company\\\",\\n      \\\"category\\\": \\\"Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating\\\",\\n      \\\"adoption_score\\\": 8,\\n      \\\"adoption_note\\\": \\\"one sentence\\\",\\n      \\\"roi_score\\\": 7,\\n      \\\"roi_note\\\": \\\"one sentence with specific outcome\\\",\\n      \\\"recency_score\\\": 9,\\n      \\\"recency_note\\\": \\\"one sentence with date\\\",\\n      \\\"composite\\\": 24,\\n      \\\"key_evidence\\\": \\\"2-3 sentences\\\",\\n      \\\"named_contractors\\\": \\\"comma-separated list\\\",\\n      \\\"source\\\": \\\"publication, URL, date\\\",\\n      \\\"source_credibility\\\": \\\"Independently reported | Vendor-published only\\\"\\n    }\\n  ]\\n}\\nInclude up to 10 items in items[].\"}]}",
+                "requestCompressedContent": true
+            },
+            "module": "http:MakeRequest",
+            "version": 4,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "get",
+                                "head",
+                                "post",
+                                "put",
+                                "patch",
+                                "delete",
+                                "options"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "name",
+                                    "type": "text",
+                                    "label": "Name",
+                                    "required": true,
+                                    "validate": {
+                                        "pattern": "^[-!#$%&'*+.^_`|~0-9A-Za-z]+$"
+                                    }
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "text",
+                                    "label": "Value"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Header"
+                        },
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "queryParameters",
+                        "spec": {
+                            "name": "value",
+                            "spec": [
+                                {
+                                    "name": "name",
+                                    "type": "text",
+                                    "label": "Name",
+                                    "required": true
+                                },
+                                {
+                                    "name": "value",
+                                    "type": "text",
+                                    "label": "Value"
+                                }
+                            ],
+                            "type": "collection",
+                            "label": "Parameter"
+                        },
+                        "type": "array",
+                        "label": "Query parameters"
+                    },
+                    {
+                        "name": "contentType",
+                        "type": "select",
+                        "label": "Body content type",
+                        "validate": {
+                            "enum": [
+                                "json",
+                                "multipart",
+                                "urlEncoded",
+                                "custom"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "parseResponse",
+                        "type": "boolean",
+                        "label": "Parse response",
+                        "required": true
+                    },
+                    {
+                        "name": "stopOnHttpError",
+                        "type": "boolean",
+                        "label": "Return error if HTTP request fails",
+                        "required": true
+                    },
+                    {
+                        "name": "timeout",
+                        "type": "uinteger",
+                        "label": "Timeout",
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "allowRedirects",
+                        "type": "boolean",
+                        "label": "Allow redirects",
+                        "required": true
+                    },
+                    {
+                        "name": "shareCookies",
+                        "type": "boolean",
+                        "label": "Share cookies with other HTTP modules",
+                        "required": true
+                    },
+                    {
+                        "name": "requestCompressedContent",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    },
+                    {
+                        "name": "inputMethod",
+                        "type": "select",
+                        "label": "Body input method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "dataStructure",
+                                "jsonString"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "jsonStringBodyContent",
+                        "type": "text",
+                        "label": "Body content",
+                        "required": true
+                    },
+                    {
+                        "name": "paginationType",
+                        "type": "select",
+                        "label": "Pagination type",
+                        "validate": {
+                            "enum": [
+                                "offsetBased",
+                                "pageBased",
+                                "urlBased",
+                                "tokenBased"
+                            ]
+                        }
+                    }
+                ],
+                "restore": {
+                    "expect": {
+                        "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [
+                                null,
+                                null,
+                                null
+                            ]
+                        },
+                        "contentType": {
+                            "label": "application/jsonEnter data in the JSON format, as a string or using a data structure."
+                        },
+                        "inputMethod": {
+                            "label": "JSON stringEnter the JSON body as a raw text string. If values contain JSON reserved characters, you must escape them manually."
+                        },
+                        "shareCookies": {
+                            "mode": "chose"
+                        },
+                        "parseResponse": {
+                            "mode": "chose"
+                        },
+                        "allowRedirects": {
+                            "mode": "chose"
+                        },
+                        "paginationType": {
+                            "label": "Empty"
+                        },
+                        "queryParameters": {
+                            "mode": "chose"
+                        },
+                        "stopOnHttpError": {
+                            "mode": "chose"
+                        },
+                        "requestCompressedContent": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "tlsType": {
+                            "label": "Empty"
+                        },
+                        "authenticationType": {
+                            "label": "No authenticationUse when no credentials are required for the request."
+                        }
+                    }
+                },
+                "advanced": true,
+                "designer": {
+                    "x": 1500,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "data",
+                        "type": "any",
+                        "label": "Data"
+                    },
+                    {
+                        "name": "statusCode",
+                        "type": "number",
+                        "label": "Status Code"
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "content-length",
+                                "type": "text",
+                                "label": "Content-Length"
+                            },
+                            {
+                                "name": "content-encoding",
+                                "type": "text",
+                                "label": "Content-Encoding"
+                            },
+                            {
+                                "name": "content-type",
+                                "type": "text",
+                                "label": "Content-Type"
+                            },
+                            {
+                                "name": "server",
+                                "type": "text",
+                                "label": "Server"
+                            },
+                            {
+                                "name": "cache-control",
+                                "type": "text",
+                                "label": "Cache-Control"
+                            },
+                            {
+                                "name": "set-cookie",
+                                "spec": {
+                                    "type": "text"
+                                },
+                                "type": "array",
+                                "label": "Set-Cookie"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Headers"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "authenticationType",
+                        "type": "select",
+                        "label": "Authentication type",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "noAuth",
+                                "apiKey",
+                                "basicAuth",
+                                "oAuth"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "tlsType",
+                        "type": "select",
+                        "label": "Transport layer security (TLS)",
+                        "validate": {
+                            "enum": [
+                                "mTls",
+                                "tls"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "proxyKeychain",
+                        "type": "keychain:proxy",
+                        "label": "Proxy"
+                    }
+                ]
+            },
+            "parameters": {
+                "tlsType": "",
+                "authenticationType": "noAuth"
+            }
+        },
+        {
+            "id": 18,
+            "mapper": {
+                "name": "cleanJSON",
+                "scope": "roundtrip",
+                "value": "{{replace(replace(8.data.choices[].message.content; \"```json\"; ); \"```\"; )}}"
+            },
+            "module": "util:SetVariable2",
+            "version": 1,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Variable name",
+                        "required": true
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": "any",
+                        "label": "Variable value"
+                    }
+                ],
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        }
+                    }
+                },
+                "designer": {
+                    "x": 1800,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "cleanJSON",
+                        "type": "any",
+                        "label": "cleanJSON"
+                    }
+                ]
+            },
+            "parameters": {}
+        },
+        {
+            "id": 19,
+            "mapper": {
+                "json": "{{18.cleanJSON}}"
+            },
+            "module": "json:ParseJSON",
+            "version": 1,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "json",
+                        "type": "text",
+                        "label": "JSON string",
+                        "required": true
+                    }
+                ],
+                "restore": {
+                    "parameters": {
+                        "type": {
+                            "label": "My data structure"
+                        }
+                    }
+                },
+                "designer": {
+                    "x": 2100,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "items",
+                        "type": "array",
+                        "label": "items",
+                        "spec": [
+                            {
+                                "name": "rank",
+                                "type": "number",
+                                "label": "rank"
+                            },
+                            {
+                                "name": "product",
+                                "type": "text",
+                                "label": "product"
+                            },
+                            {
+                                "name": "category",
+                                "type": "text",
+                                "label": "category"
+                            },
+                            {
+                                "name": "adoption_score",
+                                "type": "number",
+                                "label": "adoption_score"
+                            },
+                            {
+                                "name": "adoption_note",
+                                "type": "text",
+                                "label": "adoption_note"
+                            },
+                            {
+                                "name": "roi_score",
+                                "type": "number",
+                                "label": "roi_score"
+                            },
+                            {
+                                "name": "roi_note",
+                                "type": "text",
+                                "label": "roi_note"
+                            },
+                            {
+                                "name": "recency_score",
+                                "type": "number",
+                                "label": "recency_score"
+                            },
+                            {
+                                "name": "recency_note",
+                                "type": "text",
+                                "label": "recency_note"
+                            },
+                            {
+                                "name": "composite",
+                                "type": "number",
+                                "label": "composite"
+                            },
+                            {
+                                "name": "key_evidence",
+                                "type": "text",
+                                "label": "key_evidence"
+                            },
+                            {
+                                "name": "named_contractors",
+                                "type": "text",
+                                "label": "named_contractors"
+                            },
+                            {
+                                "name": "source",
+                                "type": "text",
+                                "label": "source"
+                            },
+                            {
+                                "name": "source_credibility",
+                                "type": "text",
+                                "label": "source_credibility"
+                            }
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "type",
+                        "type": "udt",
+                        "label": "Data structure"
+                    }
+                ]
+            },
+            "parameters": {}
+        },
+        {
+            "id": 20,
+            "mapper": {
+                "array": "{{19.items}}"
+            },
+            "module": "builtin:BasicFeeder",
+            "version": 1,
+            "metadata": {
+                "expect": [
+                    {
+                        "mode": "edit",
+                        "name": "array",
+                        "spec": [
+                            {
+                                "name": "rank",
+                                "type": "number",
+                                "label": "rank"
+                            },
+                            {
+                                "name": "product",
+                                "type": "text",
+                                "label": "product"
+                            },
+                            {
+                                "name": "category",
+                                "type": "text",
+                                "label": "category"
+                            },
+                            {
+                                "name": "adoption_score",
+                                "type": "number",
+                                "label": "adoption_score"
+                            },
+                            {
+                                "name": "adoption_note",
+                                "type": "text",
+                                "label": "adoption_note"
+                            },
+                            {
+                                "name": "roi_score",
+                                "type": "number",
+                                "label": "roi_score"
+                            },
+                            {
+                                "name": "roi_note",
+                                "type": "text",
+                                "label": "roi_note"
+                            },
+                            {
+                                "name": "recency_score",
+                                "type": "number",
+                                "label": "recency_score"
+                            },
+                            {
+                                "name": "recency_note",
+                                "type": "text",
+                                "label": "recency_note"
+                            },
+                            {
+                                "name": "composite",
+                                "type": "number",
+                                "label": "composite"
+                            },
+                            {
+                                "name": "key_evidence",
+                                "type": "text",
+                                "label": "key_evidence"
+                            },
+                            {
+                                "name": "named_contractors",
+                                "type": "text",
+                                "label": "named_contractors"
+                            },
+                            {
+                                "name": "source",
+                                "type": "text",
+                                "label": "source"
+                            },
+                            {
+                                "name": "source_credibility",
+                                "type": "text",
+                                "label": "source_credibility"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Array"
+                    }
+                ],
+                "restore": {
+                    "expect": {
+                        "array": {
+                            "mode": "edit"
+                        }
+                    }
+                },
+                "designer": {
+                    "x": 2400,
+                    "y": 0
+                }
+            },
+            "parameters": {}
+        },
+        {
+            "id": 21,
+            "mapper": {
+                "from": "drive",
+                "mode": "select",
+                "values": {
+                    "0": "{{20.rank}}",
+                    "1": "{{20.product}}",
+                    "2": "{{20.category}}",
+                    "3": "{{20.adoption_score}}",
+                    "4": "{{20.adoption_note}}",
+                    "5": "{{20.roi_score}}",
+                    "6": "{{20.roi_note}}",
+                    "7": "{{20.recency_score}}",
+                    "8": "{{20.recency_note}}",
+                    "9": "{{20.composite}}",
+                    "10": "{{20.key_evidence}}",
+                    "11": "{{20.named_contractors}}",
+                    "12": "{{20.source}}",
+                    "13": "{{20.source_credibility}}",
+                    "14": "{{14.RunAt}}"
+                },
+                "sheetId": "Sheet1",
+                "spreadsheetId": "/1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg",
+                "includesHeaders": true,
+                "insertDataOption": "INSERT_ROWS",
+                "useColumnHeaders": false,
+                "valueInputOption": "USER_ENTERED",
+                "insertUnformatted": false
+            },
+            "module": "google-sheets:addRow",
+            "version": 2,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "boolean",
+                        "label": "Table contains headers",
+                        "required": true
+                    },
+                    {
+                        "name": "values",
+                        "type": "collection",
+                        "label": "Values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "A"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "B"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "C"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "D"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "E"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "F"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "G"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "H"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "I"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "J"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "K"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "L"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "M"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "N"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "O"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "P"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "Q"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "R"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "S"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "T"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "U"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "V"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "W"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "X"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "Y"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "Z"
+                            }
+                        ]
+                    }
+                ],
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "mode": {
+                            "label": "Search by path"
+                        },
+                        "sheetId": {
+                            "label": "Sheet1"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "Integration RSS - Trend Brief"
+                            ]
+                        },
+                        "includesHeaders": {
+                            "label": "Yes"
+                        },
+                        "insertDataOption": {
+                            "mode": "chose",
+                            "label": "Insert rows"
+                        },
+                        "useColumnHeaders": {
+                            "label": "No",
+                            "nested": [
+                                {
+                                    "name": "values",
+                                    "spec": [
+                                        {
+                                            "name": "0",
+                                            "type": "text",
+                                            "label": "A"
+                                        },
+                                        {
+                                            "name": "1",
+                                            "type": "text",
+                                            "label": "B"
+                                        },
+                                        {
+                                            "name": "2",
+                                            "type": "text",
+                                            "label": "C"
+                                        },
+                                        {
+                                            "name": "3",
+                                            "type": "text",
+                                            "label": "D"
+                                        },
+                                        {
+                                            "name": "4",
+                                            "type": "text",
+                                            "label": "E"
+                                        },
+                                        {
+                                            "name": "5",
+                                            "type": "text",
+                                            "label": "F"
+                                        },
+                                        {
+                                            "name": "6",
+                                            "type": "text",
+                                            "label": "G"
+                                        },
+                                        {
+                                            "name": "7",
+                                            "type": "text",
+                                            "label": "H"
+                                        },
+                                        {
+                                            "name": "8",
+                                            "type": "text",
+                                            "label": "I"
+                                        },
+                                        {
+                                            "name": "9",
+                                            "type": "text",
+                                            "label": "J"
+                                        },
+                                        {
+                                            "name": "10",
+                                            "type": "text",
+                                            "label": "K"
+                                        },
+                                        {
+                                            "name": "11",
+                                            "type": "text",
+                                            "label": "L"
+                                        },
+                                        {
+                                            "name": "12",
+                                            "type": "text",
+                                            "label": "M"
+                                        },
+                                        {
+                                            "name": "13",
+                                            "type": "text",
+                                            "label": "N"
+                                        },
+                                        {
+                                            "name": "14",
+                                            "type": "text",
+                                            "label": "O"
+                                        },
+                                        {
+                                            "name": "15",
+                                            "type": "text",
+                                            "label": "P"
+                                        },
+                                        {
+                                            "name": "16",
+                                            "type": "text",
+                                            "label": "Q"
+                                        },
+                                        {
+                                            "name": "17",
+                                            "type": "text",
+                                            "label": "R"
+                                        },
+                                        {
+                                            "name": "18",
+                                            "type": "text",
+                                            "label": "S"
+                                        },
+                                        {
+                                            "name": "19",
+                                            "type": "text",
+                                            "label": "T"
+                                        },
+                                        {
+                                            "name": "20",
+                                            "type": "text",
+                                            "label": "U"
+                                        },
+                                        {
+                                            "name": "21",
+                                            "type": "text",
+                                            "label": "V"
+                                        },
+                                        {
+                                            "name": "22",
+                                            "type": "text",
+                                            "label": "W"
+                                        },
+                                        {
+                                            "name": "23",
+                                            "type": "text",
+                                            "label": "X"
+                                        },
+                                        {
+                                            "name": "24",
+                                            "type": "text",
+                                            "label": "Y"
+                                        },
+                                        {
+                                            "name": "25",
+                                            "type": "text",
+                                            "label": "Z"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "Google Sheets"
+                        }
+                    }
+                },
+                "designer": {
+                    "x": 2700,
+                    "y": 0
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ]
+            },
+            "parameters": {
+                "__IMTCONN__": 9717356
+            }
+        }
+    ],
+    "name": "Integration RSS",
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "designer": {
+            "orphans": []
+        },
+        "scenario": {
+            "dlq": false,
+            "slots": null,
+            "dataloss": false,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "roundtrips": 1,
+            "sequential": false,
+            "confidential": false,
+            "freshVariables": false,
+            "autoCommitTriggerLast": true
+        }
+    }
+}

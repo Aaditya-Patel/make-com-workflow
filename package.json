@@ -1,0 +1,30 @@
+{
+  "name": "integration-rss-make",
+  "private": true,
+  "description": "Make.com CLI workflow for Integration RSS scenario",
+  "scripts": {
+    "auth": "node scripts/auth-from-env.mjs",
+    "login": "make-cli login",
+    "logout": "make-cli logout",
+    "whoami": "node scripts/run-make-cli.mjs whoami",
+    "sync-account": "node scripts/make-project.mjs sync-account",
+    "status": "node scripts/make-project.mjs status",
+    "open": "node scripts/make-project.mjs open",
+    "pull": "node scripts/make-project.mjs pull",
+    "sync-secrets": "node scripts/sync-secrets.mjs",
+    "apply-azure": "node scripts/apply-azure-config.mjs",
+    "apply-items-array": "node scripts/apply-items-array-fix.mjs",
+    "apply-bulk-sheets": "node scripts/apply-bulk-sheets-fix.mjs",
+    "apply-google-sheet": "node scripts/apply-google-sheet-config.mjs",
+    "push": "node scripts/make-project.mjs push",
+    "run": "node scripts/make-project.mjs run",
+    "create": "node scripts/make-project.mjs create",
+    "executions": "node scripts/make-project.mjs executions",
+    "scenarios": "node scripts/make-project.mjs list-scenarios",
+    "connections": "node scripts/make-project.mjs list-connections",
+    "data-stores": "node scripts/make-project.mjs list-data-stores"
+  },
+  "devDependencies": {
+    "@makehq/cli": "^1.4.0"
+  }
+}

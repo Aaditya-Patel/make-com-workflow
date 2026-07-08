@@ -1,0 +1,33 @@
+{
+  "zone": "us2.make.com",
+  "organizationId": 8241391,
+  "teamId": 2516854,
+  "scenarioId": 5552982,
+  "scenarioName": "Integration RSS",
+  "blueprintPath": "Integration RSS.blueprint.json",
+  "scheduling": {
+    "type": "on-demand"
+  },
+  "sourceZone": "us2.make.com",
+  "secrets": {
+    "dataStoreId": 113753,
+    "dataStoreKey": "x-api-key",
+    "dataStructureId": 416657,
+    "dataStructureName": "API Key Store",
+    "envVar": "OPENAI_API_KEY"
+  },
+  "azureOpenAI": {
+    "endpoint": "https://make-com.openai.azure.com",
+    "deployment": null,
+    "apiVersion": "2024-10-21",
+    "region": "eastus"
+  },
+  "notes": "Set OPENAI_API_KEY and AZURE_OPENAI_DEPLOYMENT in .env before npm run push.",
+  "googleSheets": {
+    "spreadsheetName": "Integration RSS - Trend Brief",
+    "spreadsheetId": "1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg",
+    "sheetTab": "Sheet1",
+    "connectionId": 9717356,
+    "moduleId": 21
+  }
+}
