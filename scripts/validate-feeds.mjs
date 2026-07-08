@@ -139,14 +139,17 @@ for (const feed of feeds) {
 
 console.log("");
 const hardFailures = results.filter(
-  (result, index) => !result.ok && !feeds[index].allowValidationFailure
+  (result, index) => !result.ok && feeds[index].enabled && !feeds[index].allowValidationFailure
 );
 const passed = results.filter((result) => result.ok).length;
 const warned = results.filter(
-  (result, index) => !result.ok && feeds[index].allowValidationFailure
+  (result, index) => !result.ok && feeds[index].enabled && feeds[index].allowValidationFailure
+).length;
+const skipped = results.filter(
+  (result, index) => !result.ok && !feeds[index].enabled
 ).length;
 console.log(
-  `Summary: ${passed} passed, ${warned} warned, ${hardFailures.length} failed`
+  `Summary: ${passed} passed, ${warned} warned, ${skipped} skipped (disabled), ${hardFailures.length} failed`
 );
 
 if (hardFailures.length > 0) {

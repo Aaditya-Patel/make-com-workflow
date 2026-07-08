@@ -8,6 +8,11 @@ const feedsConfigPath = join(rootDir, "feeds.config.json");
 
 const TAIL_MODULE_IDS = [8, 18, 19, 20, 21];
 const HEAD_MODULE_IDS = [14, 9];
+const RESERVED_MODULE_IDS = new Set([
+  ...HEAD_MODULE_IDS,
+  ...TAIL_MODULE_IDS,
+  7, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
+]);
 
 function loadFeedsConfig() {
   return JSON.parse(readFileSync(feedsConfigPath, "utf8"));

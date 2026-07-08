@@ -52,7 +52,8 @@
       "url": "https://www.bdcnetwork.com/rss.xml",
       "tier": 2,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": false,
+      "validationNote": "BDC Network RSS is currently unavailable (404/dead FeedBurner). Re-enable when a working feed URL is found."
     },
     {
       "id": 6,
@@ -61,28 +62,30 @@
       "url": "https://www.constructionexec.com/rss",
       "tier": 2,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": true
     },
     {
-      "id": 7,
+      "id": 10,
       "aggId": 28,
       "name": "The Construction Index",
       "url": "https://www.theconstructionindex.co.uk/news/rss",
       "tier": 2,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": true
     },
     {
-      "id": 8,
+      "id": 11,
       "aggId": 29,
       "name": "GlobeSt",
-      "url": "https://www.globest.com/feed/",
+      "url": "https://feeds.feedblitz.com/globest/washington-dc",
       "tier": 2,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": true,
+      "allowValidationFailure": true,
+      "validationNote": "Original globest.com/feed/ is dead; using active FeedBlitz DC Metro feed."
     },
     {
-      "id": 9,
+      "id": 12,
       "aggId": 30,
       "name": "Autodesk Blog",
       "url": "https://blog.autodesk.com/feed/",
@@ -91,7 +94,7 @@
       "enabled": false
     },
     {
-      "id": 10,
+      "id": 13,
       "aggId": 31,
       "name": "Trimble News",
       "url": "https://www.trimble.com/en/news/rss",
@@ -100,7 +103,7 @@
       "enabled": false
     },
     {
-      "id": 11,
+      "id": 15,
       "aggId": 32,
       "name": "Bentley News",
       "url": "https://www.bentley.com/en/about-us/news/rss",
@@ -109,7 +112,7 @@
       "enabled": false
     },
     {
-      "id": 12,
+      "id": 16,
       "aggId": 33,
       "name": "Construction Dive Technology",
       "url": "https://www.constructiondive.com/topic/technology/feed/",
@@ -118,7 +121,7 @@
       "enabled": false
     },
     {
-      "id": 13,
+      "id": 17,
       "aggId": 34,
       "name": "For Construction Pros",
       "url": "https://www.forconstructionpros.com/rss",
@@ -127,7 +130,7 @@
       "enabled": false
     },
     {
-      "id": 14,
+      "id": 43,
       "aggId": 35,
       "name": "Buildings.com",
       "url": "https://www.buildings.com/rss",
