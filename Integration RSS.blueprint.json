@@ -336,7 +336,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: Construction Dive (Tier 1, industry)\nTitle: {{1.title}}\nURL: {{1.url}}\nDate: {{1.dateCreated}}\nSummary: {{1.summary}}\n---"
+                "value": "Source: Construction Dive (Tier 1, industry)\nFeed URL: https://www.constructiondive.com/feeds/news/\nTitle: {{1.title}}\nURL: {{1.url}}\nDate: {{1.dateCreated}}\nSummary: {{1.summary}}\n---"
             },
             "parameters": {
                 "feeder": 1,
@@ -603,7 +603,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: Data Center Dynamics (Tier 1, industry)\nTitle: {{2.title}}\nURL: {{2.url}}\nDate: {{2.dateCreated}}\nSummary: {{2.summary}}\n---"
+                "value": "Source: Data Center Dynamics (Tier 1, industry)\nFeed URL: https://www.datacenterdynamics.com/en/atom/\nTitle: {{2.title}}\nURL: {{2.url}}\nDate: {{2.dateCreated}}\nSummary: {{2.summary}}\n---"
             },
             "parameters": {
                 "feeder": 2,
@@ -870,7 +870,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: ENR (Tier 1, industry)\nTitle: {{3.title}}\nURL: {{3.url}}\nDate: {{3.dateCreated}}\nSummary: {{3.summary}}\n---"
+                "value": "Source: ENR (Tier 1, industry)\nFeed URL: https://www.enr.com/rss/articles\nTitle: {{3.title}}\nURL: {{3.url}}\nDate: {{3.dateCreated}}\nSummary: {{3.summary}}\n---"
             },
             "parameters": {
                 "feeder": 3,
@@ -1137,7 +1137,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: Data Center Knowledge (Tier 1, industry)\nTitle: {{4.title}}\nURL: {{4.url}}\nDate: {{4.dateCreated}}\nSummary: {{4.summary}}\n---"
+                "value": "Source: Data Center Knowledge (Tier 1, industry)\nFeed URL: https://www.datacenterknowledge.com/rss.xml\nTitle: {{4.title}}\nURL: {{4.url}}\nDate: {{4.dateCreated}}\nSummary: {{4.summary}}\n---"
             },
             "parameters": {
                 "feeder": 4,
@@ -1404,7 +1404,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: Construction Exec (Tier 2, industry)\nTitle: {{6.title}}\nURL: {{6.url}}\nDate: {{6.dateCreated}}\nSummary: {{6.summary}}\n---"
+                "value": "Source: Construction Exec (Tier 2, industry)\nFeed URL: https://www.constructionexec.com/rss\nTitle: {{6.title}}\nURL: {{6.url}}\nDate: {{6.dateCreated}}\nSummary: {{6.summary}}\n---"
             },
             "parameters": {
                 "feeder": 6,
@@ -1671,7 +1671,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: The Construction Index (Tier 2, industry)\nTitle: {{10.title}}\nURL: {{10.url}}\nDate: {{10.dateCreated}}\nSummary: {{10.summary}}\n---"
+                "value": "Source: The Construction Index (Tier 2, industry)\nFeed URL: https://www.theconstructionindex.co.uk/news/rss\nTitle: {{10.title}}\nURL: {{10.url}}\nDate: {{10.dateCreated}}\nSummary: {{10.summary}}\n---"
             },
             "parameters": {
                 "feeder": 10,
@@ -1938,7 +1938,7 @@
             "module": "util:TextAggregator",
             "version": 1,
             "mapper": {
-                "value": "Source: GlobeSt (Tier 2, industry)\nTitle: {{11.title}}\nURL: {{11.url}}\nDate: {{11.dateCreated}}\nSummary: {{11.summary}}\n---"
+                "value": "Source: GlobeSt (Tier 2, industry)\nFeed URL: https://feeds.feedblitz.com/globest/washington-dc\nTitle: {{11.title}}\nURL: {{11.url}}\nDate: {{11.dateCreated}}\nSummary: {{11.summary}}\n---"
             },
             "parameters": {
                 "feeder": 11,
@@ -2006,7 +2006,7 @@
                 "parseResponse": true,
                 "allowRedirects": true,
                 "stopOnHttpError": true,
-                "jsonStringBodyContent": "{\"max_completion_tokens\":16000,\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"You are an AI intelligence analyst for a Head of AI at a data center construction company. You have been given a batch of recent articles from industry RSS feeds covering construction and data center technology news.\\n\\nARTICLE BATCH:\\n{{escapeJSON(7.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\\\n{{escapeJSON(23.text)}}\\n\\nYOUR TASK:\\nAnalyze all articles above and identify the Top 10 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.\\n\\nSCORING — rank each product on three dimensions, each out of 10:\\n- ADOPTION (1-10): How many named major contractors or owners are using it?\\n- ROI (1-10): How documented is the business outcome? Specific numbers score higher.\\n- RECENCY (1-10): How recent is the deployment or announcement?\\n\\nRULES:\\n- Only include products directly used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.\\n- Do not include data center operations tools used post-construction.\\n- Flag all vendor-published figures clearly.\\n- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives.\\n- Plain English throughout. No jargon. No superlatives.\\n- If fewer than 10 products are found in the article batch, return only what you find.\\n\\nOUTPUT FORMAT (mandatory):\\nReturn ONLY one valid JSON object. No markdown, no text before or after.\\nUse this exact schema:\\n{\\n  \\\"items\\\": [\\n    {\\n      \\\"rank\\\": 1,\\n      \\\"product\\\": \\\"Product name and company\\\",\\n      \\\"category\\\": \\\"Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating\\\",\\n      \\\"adoption_score\\\": 8,\\n      \\\"adoption_note\\\": \\\"one sentence\\\",\\n      \\\"roi_score\\\": 7,\\n      \\\"roi_note\\\": \\\"one sentence with specific outcome\\\",\\n      \\\"recency_score\\\": 9,\\n      \\\"recency_note\\\": \\\"one sentence with date\\\",\\n      \\\"composite\\\": 24,\\n      \\\"key_evidence\\\": \\\"2-3 sentences\\\",\\n      \\\"named_contractors\\\": \\\"comma-separated list\\\",\\n      \\\"source\\\": \\\"publication, URL, date\\\",\\n      \\\"source_credibility\\\": \\\"Independently reported | Vendor-published only\\\"\\n    }\\n  ]\\n}\\nInclude up to 10 items in items[].\"}]}",
+                "jsonStringBodyContent": "{\"max_completion_tokens\":16000,\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"You are an AI intelligence analyst for a Head of AI at a data center construction company. You have been given a batch of recent articles from industry RSS feeds covering construction and data center technology news.\\n\\nARTICLE BATCH:\\n{{escapeJSON(7.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n\\nRSS FEEDS REFERENCE (use these exact names and URLs in feed_citation):\\n- Construction Dive: https://www.constructiondive.com/feeds/news/\\n- Data Center Dynamics: https://www.datacenterdynamics.com/en/atom/\\n- ENR: https://www.enr.com/rss/articles\\n- Data Center Knowledge: https://www.datacenterknowledge.com/rss.xml\\n- Construction Exec: https://www.constructionexec.com/rss\\n- The Construction Index: https://www.theconstructionindex.co.uk/news/rss\\n- GlobeSt: https://feeds.feedblitz.com/globest/washington-dc\\n\\n\\nYOUR TASK:\\nAnalyze all articles above and identify the Top 10 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.\\n\\nSCORING — rank each product on three dimensions, each out of 10:\\n- ADOPTION (1-10): How many named major contractors or owners are using it?\\n- ROI (1-10): How documented is the business outcome? Specific numbers score higher.\\n- RECENCY (1-10): How recent is the deployment or announcement?\\n\\nRULES:\\n- Only include products directly used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.\\n- Do not include data center operations tools used post-construction.\\n- Flag all vendor-published figures clearly.\\n- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives.\\n- feed_citation must cite the RSS feed(s) used for evidence. Use the exact feed name and Feed URL from RSS FEEDS REFERENCE (not the article URL from the batch). If multiple feeds support the row, separate with semicolons.\\n- Plain English throughout. No jargon. No superlatives.\\n- If fewer than 10 products are found in the article batch, return only what you find.\\n\\nOUTPUT FORMAT (mandatory):\\nReturn ONLY one valid JSON object. No markdown, no text before or after.\\nUse this exact schema:\\n{\\n  \\\"items\\\": [\\n    {\\n      \\\"rank\\\": 1,\\n      \\\"product\\\": \\\"Product name and company\\\",\\n      \\\"category\\\": \\\"Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating\\\",\\n      \\\"adoption_score\\\": 8,\\n      \\\"adoption_note\\\": \\\"one sentence\\\",\\n      \\\"roi_score\\\": 7,\\n      \\\"roi_note\\\": \\\"one sentence with specific outcome\\\",\\n      \\\"recency_score\\\": 9,\\n      \\\"recency_note\\\": \\\"one sentence with date\\\",\\n      \\\"composite\\\": 24,\\n      \\\"key_evidence\\\": \\\"2-3 sentences\\\",\\n      \\\"named_contractors\\\": \\\"comma-separated list\\\",\\n      \\\"source\\\": \\\"publication, URL, date\\\",\\n      \\\"source_credibility\\\": \\\"Independently reported | Vendor-published only\\\",\\n      \\\"feed_citation\\\": \\\"Feed Name | https://feed-url.example\\\"\\n    }\\n  ]\\n}\\nInclude up to 10 items in items[].\"}]}",
                 "requestCompressedContent": true
             },
             "module": "http:MakeRequest",
@@ -2473,6 +2473,11 @@
                                 "name": "source_credibility",
                                 "type": "text",
                                 "label": "source_credibility"
+                            },
+                            {
+                                "name": "feed_citation",
+                                "type": "text",
+                                "label": "feed_citation"
                             }
                         ]
                     }
@@ -2609,7 +2614,8 @@
                     "11": "{{20.named_contractors}}",
                     "12": "{{20.source}}",
                     "13": "{{20.source_credibility}}",
-                    "14": "{{14.RunAt}}"
+                    "14": "{{14.RunAt}}",
+                    "15": "{{20.feed_citation}}"
                 },
                 "sheetId": "Sheet1",
                 "spreadsheetId": "/1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg",

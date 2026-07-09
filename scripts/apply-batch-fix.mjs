@@ -36,6 +36,7 @@ function maxResultsForTier(defaults, tier) {
 function aggValue(feed) {
   return [
     `Source: ${feed.name} (Tier ${feed.tier}, ${feed.sourceType})`,
+    `Feed URL: ${feed.url}`,
     `Title: {{${feed.id}.title}}`,
     `URL: {{${feed.id}.url}}`,
     `Date: {{${feed.id}.dateCreated}}`,
@@ -103,7 +104,43 @@ function createAggregator(feed, designerX) {
 function buildArticleBatch(enabledFeeds) {
   return enabledFeeds
     .map((feed) => `{{escapeJSON(${feed.aggId}.text)}}`)
-    .join("\\n");
+    .join("\n");
+}
+
+function buildFeedReference(enabledFeeds) {
+  return enabledFeeds.map((feed) => `- ${feed.name}: ${feed.url}`).join("\n");
+}
+
+function ensureFeedCitationInPrompt(prompt, enabledFeeds) {
+  const feedRefBlock = `RSS FEEDS REFERENCE (use these exact names and URLs in feed_citation):\n${buildFeedReference(enabledFeeds)}`;
+
+  if (/RSS FEEDS REFERENCE/.test(prompt)) {
+    prompt = prompt.replace(
+      /RSS FEEDS REFERENCE[\s\S]*?(?=\n+YOUR TASK:)/,
+      feedRefBlock
+    );
+  } else {
+    prompt = prompt.replace(/(\n+YOUR TASK:)/, `\n\n${feedRefBlock}\n$1`);
+  }
+
+  const feedCitationRule =
+    "- feed_citation must cite the RSS feed(s) used for evidence. Use the exact feed name and Feed URL from RSS FEEDS REFERENCE (not the article URL from the batch). If multiple feeds support the row, separate with semicolons.";
+
+  if (!prompt.includes('"feed_citation"')) {
+    prompt = prompt.replace(
+      /"source_credibility": "Independently reported \| Vendor-published only"/,
+      '"source_credibility": "Independently reported | Vendor-published only",\n      "feed_citation": "Feed Name | https://feed-url.example"'
+    );
+  }
+
+  if (!prompt.includes("feed_citation must cite")) {
+    prompt = prompt.replace(
+      "- Plain English throughout.",
+      `${feedCitationRule}\n- Plain English throughout.`
+    );
+  }
+
+  return prompt;
 }
 
 function updatePrompt(http, enabledFeeds) {
@@ -111,16 +148,15 @@ function updatePrompt(http, enabledFeeds) {
   let prompt = body.messages[0].content;
   const articleBatch = buildArticleBatch(enabledFeeds);
 
-  if (/ARTICLE BATCH:\\n/.test(prompt)) {
+  // Replace the full batch block up to YOUR TASK (handles real newlines and
+  // any duplicated escapeJSON lines left by prior pushes).
+  if (/ARTICLE BATCH:/.test(prompt)) {
     prompt = prompt.replace(
-      /ARTICLE BATCH:\\n(?:\{\{escapeJSON\(\d+\.text\)\}\}\\n?)*/,
-      `ARTICLE BATCH:\\n${articleBatch}`
+      /ARTICLE BATCH:\n[\s\S]*?(?=\n+YOUR TASK:)/,
+      `ARTICLE BATCH:\n${articleBatch}`
     );
   } else {
-    prompt = prompt.replace(
-      "{{escapeJSON(7.text)}}",
-      articleBatch.replace(/\\n/g, "\n")
-    );
+    prompt = prompt.replace("{{escapeJSON(7.text)}}", articleBatch);
   }
 
   const vendorRule =
@@ -141,6 +177,8 @@ function updatePrompt(http, enabledFeeds) {
     );
   }
 
+  prompt = ensureFeedCitationInPrompt(prompt, enabledFeeds);
+
   body.messages[0].content = prompt;
   http.mapper.jsonStringBodyContent = JSON.stringify(body);
 }
@@ -157,6 +195,14 @@ const enabledFeeds = feedsConfig.feeds
 
 if (enabledFeeds.length === 0) {
   throw new Error("No enabled feeds in feeds.config.json");
+}
+
+for (const feed of enabledFeeds) {
+  if (RESERVED_MODULE_IDS.has(feed.id)) {
+    throw new Error(
+      `Feed "${feed.name}" uses reserved module id ${feed.id}. Choose a feed id that does not conflict with system modules (8, 9, 14, 18-21) or aggregators (7, 23-35).`
+    );
+  }
 }
 
 const blueprint = JSON.parse(readFileSync(blueprintPath, "utf8"));

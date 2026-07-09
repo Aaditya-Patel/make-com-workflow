@@ -8,7 +8,7 @@ const blueprintPath = join(
   "Integration RSS.blueprint.json"
 );
 
-// Column order must match the sheet header row (A..O).
+// Column order must match the sheet header row (A..P).
 const FIELD_NAMES = [
   "rank",
   "product",
@@ -24,9 +24,11 @@ const FIELD_NAMES = [
   "named_contractors",
   "source",
   "source_credibility",
+  "feed_citation",
 ];
 const RUN_AT_COLUMN = "14";
 const RUN_AT_VALUE = "{{14.RunAt}}";
+const FEED_CITATION_COLUMN = "15";
 
 const COLUMN_LABELS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -75,14 +77,13 @@ parseModule.metadata.interface = [
 // 3. Iterator: iterate the parsed items array.
 feederModule.mapper.array = "{{19.items}}";
 
-// 4. addRow: map each iterator bundle field to a positional column (A..N),
-//    then append run timestamp in O so rows from the same run are traceable.
-//    Direct {{20.field}} references — the iterator bundle IS the current item.
+// 4. addRow: map LLM fields to A..N, run_at in O, feed_citation in P.
 const values = {};
-FIELD_NAMES.forEach((name, index) => {
+FIELD_NAMES.slice(0, 14).forEach((name, index) => {
   values[String(index)] = `{{20.${name}}}`;
 });
 values[RUN_AT_COLUMN] = RUN_AT_VALUE;
+values[FEED_CITATION_COLUMN] = `{{20.feed_citation}}`;
 
 const connectionId = sheetsModule.parameters?.__IMTCONN__ ?? 9717356;
 const spreadsheetId =
@@ -134,3 +135,4 @@ console.log("  iterator :", feederModule.mapper.array);
 console.log("  col A -> ", values["0"]);
 console.log("  col N -> ", values["13"]);
 console.log("  col O -> ", values[RUN_AT_COLUMN]);
+console.log("  col P -> ", values[FEED_CITATION_COLUMN]);
