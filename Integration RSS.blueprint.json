@@ -122,7 +122,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "6",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -389,7 +389,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "6",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -656,7 +656,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "6",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -923,7 +923,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "6",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -1190,7 +1190,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "4",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -1457,7 +1457,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "4",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -1724,7 +1724,7 @@
                 "gzip": true,
                 "password": "",
                 "username": "",
-                "maxResults": "4",
+                "maxResults": "20",
                 "filterDateFrom": "{{addDays(now; -30)}}"
             },
             "module": "rss:ActionReadArticles",
@@ -1985,6 +1985,807 @@
             }
         },
         {
+            "id": 12,
+            "mapper": {
+                "url": "https://adsknews.autodesk.com/feed",
+                "gzip": true,
+                "password": "",
+                "username": "",
+                "maxResults": "20",
+                "filterDateFrom": "{{addDays(now; -30)}}"
+            },
+            "module": "rss:ActionReadArticles",
+            "version": 4,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "username",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "password",
+                        "type": "text",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "filterDateFrom",
+                        "type": "date",
+                        "label": "Date from"
+                    },
+                    {
+                        "name": "filterDateTo",
+                        "type": "date",
+                        "label": "Date to "
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of returned items",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    }
+                ],
+                "restore": {},
+                "designer": {
+                    "x": 4200,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "summary",
+                        "type": "text",
+                        "label": "Summary"
+                    },
+                    {
+                        "name": "author",
+                        "type": "text",
+                        "label": "Author"
+                    },
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                    },
+                    {
+                        "name": "dateUpdated",
+                        "type": "date",
+                        "label": "Date updated"
+                    },
+                    {
+                        "name": "dateCreated",
+                        "type": "date",
+                        "label": "Date created"
+                    },
+                    {
+                        "name": "comments",
+                        "type": "url",
+                        "label": "Comments"
+                    },
+                    {
+                        "name": "image",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Image"
+                    },
+                    {
+                        "name": "categories",
+                        "spec": {
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Categories"
+                    },
+                    {
+                        "name": "source",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Source"
+                    },
+                    {
+                        "name": "enclosures",
+                        "spec": [
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text",
+                                "label": "Type"
+                            },
+                            {
+                                "name": "length",
+                                "type": "number",
+                                "label": "Length"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Enclosures"
+                    },
+                    {
+                        "help": "Other RSS fields. All values are in text format.",
+                        "name": "rssFields",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "title"
+                            },
+                            {
+                                "name": "link",
+                                "type": "text",
+                                "label": "link"
+                            },
+                            {
+                                "name": "description",
+                                "type": "text",
+                                "label": "description"
+                            },
+                            {
+                                "name": "pubdate",
+                                "type": "text",
+                                "label": "pubdate"
+                            },
+                            {
+                                "name": "guid",
+                                "type": "text",
+                                "label": "guid"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "RSS fields"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include",
+                        "type": "select",
+                        "label": "Process RSS fields",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "google-merchant-center",
+                                "itunes"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "parameters": {
+                "include": []
+            }
+        },
+        {
+            "id": 30,
+            "module": "util:TextAggregator",
+            "version": 1,
+            "mapper": {
+                "value": "Source: Autodesk News (Tier 3, vendor)\nFeed URL: https://adsknews.autodesk.com/feed\nTitle: {{12.title}}\nURL: {{12.url}}\nDate: {{12.dateCreated}}\nSummary: {{12.summary}}\n---"
+            },
+            "parameters": {
+                "feeder": 12,
+                "rowSeparator": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 4500,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "RSS - Retrieve RSS feed items [12]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 15,
+            "mapper": {
+                "url": "https://investors.bentley.com/rss/news-releases.xml",
+                "gzip": true,
+                "password": "",
+                "username": "",
+                "maxResults": "20",
+                "filterDateFrom": "{{addDays(now; -30)}}"
+            },
+            "module": "rss:ActionReadArticles",
+            "version": 4,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "username",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "password",
+                        "type": "text",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "filterDateFrom",
+                        "type": "date",
+                        "label": "Date from"
+                    },
+                    {
+                        "name": "filterDateTo",
+                        "type": "date",
+                        "label": "Date to "
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of returned items",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    }
+                ],
+                "restore": {},
+                "designer": {
+                    "x": 4800,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "summary",
+                        "type": "text",
+                        "label": "Summary"
+                    },
+                    {
+                        "name": "author",
+                        "type": "text",
+                        "label": "Author"
+                    },
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                    },
+                    {
+                        "name": "dateUpdated",
+                        "type": "date",
+                        "label": "Date updated"
+                    },
+                    {
+                        "name": "dateCreated",
+                        "type": "date",
+                        "label": "Date created"
+                    },
+                    {
+                        "name": "comments",
+                        "type": "url",
+                        "label": "Comments"
+                    },
+                    {
+                        "name": "image",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Image"
+                    },
+                    {
+                        "name": "categories",
+                        "spec": {
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Categories"
+                    },
+                    {
+                        "name": "source",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Source"
+                    },
+                    {
+                        "name": "enclosures",
+                        "spec": [
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text",
+                                "label": "Type"
+                            },
+                            {
+                                "name": "length",
+                                "type": "number",
+                                "label": "Length"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Enclosures"
+                    },
+                    {
+                        "help": "Other RSS fields. All values are in text format.",
+                        "name": "rssFields",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "title"
+                            },
+                            {
+                                "name": "link",
+                                "type": "text",
+                                "label": "link"
+                            },
+                            {
+                                "name": "description",
+                                "type": "text",
+                                "label": "description"
+                            },
+                            {
+                                "name": "pubdate",
+                                "type": "text",
+                                "label": "pubdate"
+                            },
+                            {
+                                "name": "guid",
+                                "type": "text",
+                                "label": "guid"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "RSS fields"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include",
+                        "type": "select",
+                        "label": "Process RSS fields",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "google-merchant-center",
+                                "itunes"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "parameters": {
+                "include": []
+            }
+        },
+        {
+            "id": 32,
+            "module": "util:TextAggregator",
+            "version": 1,
+            "mapper": {
+                "value": "Source: Bentley News (Tier 3, vendor)\nFeed URL: https://investors.bentley.com/rss/news-releases.xml\nTitle: {{15.title}}\nURL: {{15.url}}\nDate: {{15.dateCreated}}\nSummary: {{15.summary}}\n---"
+            },
+            "parameters": {
+                "feeder": 15,
+                "rowSeparator": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 5100,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "RSS - Retrieve RSS feed items [15]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": 16,
+            "mapper": {
+                "url": "https://www.constructiondive.com/feeds/topic/technology/",
+                "gzip": true,
+                "password": "",
+                "username": "",
+                "maxResults": "20",
+                "filterDateFrom": "{{addDays(now; -30)}}"
+            },
+            "module": "rss:ActionReadArticles",
+            "version": 4,
+            "metadata": {
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "username",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "password",
+                        "type": "text",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "filterDateFrom",
+                        "type": "date",
+                        "label": "Date from"
+                    },
+                    {
+                        "name": "filterDateTo",
+                        "type": "date",
+                        "label": "Date to "
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of returned items",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    }
+                ],
+                "restore": {},
+                "designer": {
+                    "x": 5400,
+                    "y": 0
+                },
+                "interface": [
+                    {
+                        "name": "title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "summary",
+                        "type": "text",
+                        "label": "Summary"
+                    },
+                    {
+                        "name": "author",
+                        "type": "text",
+                        "label": "Author"
+                    },
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL"
+                    },
+                    {
+                        "name": "dateUpdated",
+                        "type": "date",
+                        "label": "Date updated"
+                    },
+                    {
+                        "name": "dateCreated",
+                        "type": "date",
+                        "label": "Date created"
+                    },
+                    {
+                        "name": "comments",
+                        "type": "url",
+                        "label": "Comments"
+                    },
+                    {
+                        "name": "image",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Image"
+                    },
+                    {
+                        "name": "categories",
+                        "spec": {
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Categories"
+                    },
+                    {
+                        "name": "source",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Source"
+                    },
+                    {
+                        "name": "enclosures",
+                        "spec": [
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text",
+                                "label": "Type"
+                            },
+                            {
+                                "name": "length",
+                                "type": "number",
+                                "label": "Length"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Enclosures"
+                    },
+                    {
+                        "help": "Other RSS fields. All values are in text format.",
+                        "name": "rssFields",
+                        "spec": [
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "title"
+                            },
+                            {
+                                "name": "link",
+                                "type": "text",
+                                "label": "link"
+                            },
+                            {
+                                "name": "description",
+                                "type": "text",
+                                "label": "description"
+                            },
+                            {
+                                "name": "pubdate",
+                                "type": "text",
+                                "label": "pubdate"
+                            },
+                            {
+                                "name": "guid",
+                                "type": "text",
+                                "label": "guid"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "RSS fields"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "include",
+                        "type": "select",
+                        "label": "Process RSS fields",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "google-merchant-center",
+                                "itunes"
+                            ]
+                        }
+                    }
+                ]
+            },
+            "parameters": {
+                "include": []
+            }
+        },
+        {
+            "id": 33,
+            "module": "util:TextAggregator",
+            "version": 1,
+            "mapper": {
+                "value": "Source: Construction Dive Technology (Tier 4, industry)\nFeed URL: https://www.constructiondive.com/feeds/topic/technology/\nTitle: {{16.title}}\nURL: {{16.url}}\nDate: {{16.dateCreated}}\nSummary: {{16.summary}}\n---"
+            },
+            "parameters": {
+                "feeder": 16,
+                "rowSeparator": ""
+            },
+            "metadata": {
+                "designer": {
+                    "x": 5700,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "RSS - Retrieve RSS feed items [16]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "id": 8,
             "mapper": {
                 "url": "https://make-com.openai.azure.com/openai/deployments/gpt-5-mini/chat/completions?api-version=2024-10-21",
@@ -2006,7 +2807,7 @@
                 "parseResponse": true,
                 "allowRedirects": true,
                 "stopOnHttpError": true,
-                "jsonStringBodyContent": "{\"max_completion_tokens\":16000,\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"You are an AI intelligence analyst for a Head of AI at a data center construction company. You have been given a batch of recent articles from industry RSS feeds covering construction and data center technology news.\\n\\nARTICLE BATCH:\\n{{escapeJSON(7.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n\\nRSS FEEDS REFERENCE (use these exact names and URLs in feed_citation):\\n- Construction Dive: https://www.constructiondive.com/feeds/news/\\n- Data Center Dynamics: https://www.datacenterdynamics.com/en/atom/\\n- ENR: https://www.enr.com/rss/articles\\n- Data Center Knowledge: https://www.datacenterknowledge.com/rss.xml\\n- Construction Exec: https://www.constructionexec.com/rss\\n- The Construction Index: https://www.theconstructionindex.co.uk/news/rss\\n- GlobeSt: https://feeds.feedblitz.com/globest/washington-dc\\n\\n\\nYOUR TASK:\\nAnalyze all articles above and identify the Top 10 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.\\n\\nSCORING — rank each product on three dimensions, each out of 10:\\n- ADOPTION (1-10): How many named major contractors or owners are using it?\\n- ROI (1-10): How documented is the business outcome? Specific numbers score higher.\\n- RECENCY (1-10): How recent is the deployment or announcement?\\n\\nRULES:\\n- Only include products directly used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.\\n- Do not include data center operations tools used post-construction.\\n- Flag all vendor-published figures clearly.\\n- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives.\\n- feed_citation must cite the RSS feed(s) used for evidence. Use the exact feed name and Feed URL from RSS FEEDS REFERENCE (not the article URL from the batch). If multiple feeds support the row, separate with semicolons.\\n- Plain English throughout. No jargon. No superlatives.\\n- If fewer than 10 products are found in the article batch, return only what you find.\\n\\nOUTPUT FORMAT (mandatory):\\nReturn ONLY one valid JSON object. No markdown, no text before or after.\\nUse this exact schema:\\n{\\n  \\\"items\\\": [\\n    {\\n      \\\"rank\\\": 1,\\n      \\\"product\\\": \\\"Product name and company\\\",\\n      \\\"category\\\": \\\"Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating\\\",\\n      \\\"adoption_score\\\": 8,\\n      \\\"adoption_note\\\": \\\"one sentence\\\",\\n      \\\"roi_score\\\": 7,\\n      \\\"roi_note\\\": \\\"one sentence with specific outcome\\\",\\n      \\\"recency_score\\\": 9,\\n      \\\"recency_note\\\": \\\"one sentence with date\\\",\\n      \\\"composite\\\": 24,\\n      \\\"key_evidence\\\": \\\"2-3 sentences\\\",\\n      \\\"named_contractors\\\": \\\"comma-separated list\\\",\\n      \\\"source\\\": \\\"publication, URL, date\\\",\\n      \\\"source_credibility\\\": \\\"Independently reported | Vendor-published only\\\",\\n      \\\"feed_citation\\\": \\\"Feed Name | https://feed-url.example\\\"\\n    }\\n  ]\\n}\\nInclude up to 10 items in items[].\"}]}",
+                "jsonStringBodyContent": "{\"max_completion_tokens\":16000,\"response_format\":{\"type\":\"json_object\"},\"messages\":[{\"role\":\"user\",\"content\":\"You are an AI intelligence analyst for a Head of AI at a data center construction company. You have been given a batch of recent articles from industry RSS feeds covering construction and data center technology news.\\n\\nARTICLE BATCH:\\n{{escapeJSON(7.text)}}\\n{{escapeJSON(23.text)}}\\n{{escapeJSON(24.text)}}\\n{{escapeJSON(25.text)}}\\n{{escapeJSON(27.text)}}\\n{{escapeJSON(28.text)}}\\n{{escapeJSON(29.text)}}\\n{{escapeJSON(30.text)}}\\n{{escapeJSON(32.text)}}\\n{{escapeJSON(33.text)}}\\n\\n\\nYOUR TASK:\\nAnalyze all articles above and identify the Top 10 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.\\n\\nSCORING — rank each product on three dimensions, each out of 10:\\n- ADOPTION (1-10): How many named major contractors or owners are using it?\\n- ROI (1-10): How documented is the business outcome? Specific numbers score higher.\\n- RECENCY (1-10): How recent is the deployment or announcement?\\n\\nRULES:\\n- Only include products directly used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.\\n- Do not include data center operations tools used post-construction.\\n- Flag all vendor-published figures clearly.\\n- Articles tagged sourceType vendor in the batch are vendor-published. Flag them in source_credibility and deprioritize unless they cite independent third-party deployments.\\n- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes. Return at least 5 items whenever the batch mentions any AI tools, vendors, or initiatives.\\n- feed_citation must cite the RSS feed(s) used for evidence. Use the exact feed name and Feed URL from RSS FEEDS REFERENCE (not the article URL from the batch). If multiple feeds support the row, separate with semicolons.\\n- Plain English throughout. No jargon. No superlatives.\\n- If fewer than 10 products are found in the article batch, return only what you find.\\n\\nOUTPUT FORMAT (mandatory):\\nReturn ONLY one valid JSON object. No markdown, no text before or after.\\nUse this exact schema:\\n{\\n  \\\"items\\\": [\\n    {\\n      \\\"rank\\\": 1,\\n      \\\"product\\\": \\\"Product name and company\\\",\\n      \\\"category\\\": \\\"Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating\\\",\\n      \\\"adoption_score\\\": 8,\\n      \\\"adoption_note\\\": \\\"one sentence\\\",\\n      \\\"roi_score\\\": 7,\\n      \\\"roi_note\\\": \\\"one sentence with specific outcome\\\",\\n      \\\"recency_score\\\": 9,\\n      \\\"recency_note\\\": \\\"one sentence with date\\\",\\n      \\\"composite\\\": 24,\\n      \\\"key_evidence\\\": \\\"2-3 sentences\\\",\\n      \\\"named_contractors\\\": \\\"comma-separated list\\\",\\n      \\\"source\\\": \\\"publication, URL, date\\\",\\n      \\\"source_credibility\\\": \\\"Independently reported | Vendor-published only\\\",\\n      \\\"feed_citation\\\": \\\"Feed Name | https://feed-url.example\\\"\\n    }\\n  ]\\n}\\nInclude up to 10 items in items[].\"}]}",
                 "requestCompressedContent": true
             },
             "module": "http:MakeRequest",

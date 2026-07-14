@@ -7,7 +7,9 @@
   "blueprintPath": "Integration RSS.blueprint.json",
   "scheduling": {
     "type": "monthly",
-    "days": [1],
+    "days": [
+      1
+    ],
     "time": "09:00"
   },
   "scheduleTimezone": "Asia/Kolkata",

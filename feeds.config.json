@@ -1,9 +1,9 @@
 {
   "defaults": {
-    "maxResultsTier1": 6,
-    "maxResultsTier2": 4,
-    "maxResultsTier3": 4,
-    "maxResultsTier4": 3,
+    "maxResultsTier1": 20,
+    "maxResultsTier2": 20,
+    "maxResultsTier3": 20,
+    "maxResultsTier4": 20,
     "filterDateFrom": "{{addDays(now; -30)}}"
   },
   "feeds": [
@@ -53,7 +53,7 @@
       "tier": 2,
       "sourceType": "industry",
       "enabled": false,
-      "validationNote": "BDC Network RSS is currently unavailable (404/dead FeedBurner). Re-enable when a working feed URL is found."
+      "validationNote": "Configured /rss.xml returns JSON 404; FeedBurner dead; homepage __rss CMS endpoint returns 404 empty body. See README.md."
     },
     {
       "id": 6,
@@ -87,11 +87,12 @@
     {
       "id": 12,
       "aggId": 30,
-      "name": "Autodesk Blog",
-      "url": "https://blog.autodesk.com/feed/",
+      "name": "Autodesk News",
+      "url": "https://adsknews.autodesk.com/feed",
       "tier": 3,
       "sourceType": "vendor",
-      "enabled": false
+      "enabled": true,
+      "validationNote": "Client URL blog.autodesk.com/feed/ returns HTML; using adsknews.autodesk.com/feed."
     },
     {
       "id": 13,
@@ -100,25 +101,28 @@
       "url": "https://www.trimble.com/en/news/rss",
       "tier": 3,
       "sourceType": "vendor",
-      "enabled": false
+      "enabled": false,
+      "validationNote": "Configured /en/news/rss returns 404. Working alternates: /en/feed/all/blog and /en/feed/all/resources. See README.md."
     },
     {
       "id": 15,
       "aggId": 32,
       "name": "Bentley News",
-      "url": "https://www.bentley.com/en/about-us/news/rss",
+      "url": "https://investors.bentley.com/rss/news-releases.xml",
       "tier": 3,
       "sourceType": "vendor",
-      "enabled": false
+      "enabled": true,
+      "validationNote": "Client URL bentley.com/about-us/news/rss blocks fetchers (403); using investor news releases RSS."
     },
     {
       "id": 16,
       "aggId": 33,
       "name": "Construction Dive Technology",
-      "url": "https://www.constructiondive.com/topic/technology/feed/",
+      "url": "https://www.constructiondive.com/feeds/topic/technology/",
       "tier": 4,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": true,
+      "validationNote": "Client URL topic/technology/feed/ returns 404; using feeds/topic/technology/."
     },
     {
       "id": 17,
@@ -127,7 +131,8 @@
       "url": "https://www.forconstructionpros.com/rss",
       "tier": 4,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": false,
+      "validationNote": "Cloudflare bot challenge (HTTP 403, 'Just a moment...') on all paths including homepage. See README.md."
     },
     {
       "id": 43,
@@ -136,7 +141,8 @@
       "url": "https://www.buildings.com/rss",
       "tier": 4,
       "sourceType": "industry",
-      "enabled": false
+      "enabled": false,
+      "validationNote": "Configured /rss returns JSON 404. Working alternate: /__rss/website-scheduled-content.xml (home section). See README.md."
     }
   ]
 }
