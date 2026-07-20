@@ -22,6 +22,7 @@
     "validate-feeds:tier1": "node scripts/validate-feeds.mjs 1",
     "validate-feeds:tier2": "node scripts/validate-feeds.mjs 2",
     "push": "node scripts/make-project.mjs push",
+    "push:core": "node scripts/make-project.mjs push --skip-google",
     "activate": "node scripts/make-project.mjs activate",
     "run": "node scripts/make-project.mjs run",
     "create": "node scripts/make-project.mjs create",

@@ -27,19 +27,19 @@
     "apiVersion": "2024-10-21",
     "region": "eastus"
   },
-  "notes": "Set OPENAI_API_KEY and AZURE_OPENAI_DEPLOYMENT in .env before npm run push. Monthly schedule fires on the 1st at 09:00 in the Make organization timezone (set org timezone to Asia/Kolkata for IST). For emailReport: create a Gmail connection for stackinfraworkflow@gmail.com (Sheets connection 9717356 cannot send mail), set emailReport.connectionId, then npm run push.",
+  "notes": "eu1 scenario 6629790. After Google (9155028) and Gmail (9155029) are authorized in Credentials, run npm run push for Sheets + email modules. Until then use npm run push:core.",
   "googleSheets": {
     "spreadsheetName": "Integration RSS - Trend Brief",
     "spreadsheetId": "1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg",
     "sheetTab": "Sheet1",
-    "connectionId": 9150142,
+    "connectionId": 9155028,
     "moduleId": 21
   },
   "emailReport": {
     "enabled": true,
     "to": "aditya.patel@kenexai.com",
     "from": "stackinfraworkflow@gmail.com",
-    "connectionId": 9150145,
+    "connectionId": 9155029,
     "connectionLabel": "Gmail RSS",
     "subject": "Integration RSS Trend Brief — {{14.RunAt}}",
     "sheetUrl": "https://docs.google.com/spreadsheets/d/1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg/edit",

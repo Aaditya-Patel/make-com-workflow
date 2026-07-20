@@ -170,7 +170,24 @@ try {
       runNodeScript("apply-bulk-sheets-fix.mjs");
       runNodeScript("apply-google-sheet-config.mjs");
       runNodeScript("apply-email-report-fix.mjs");
-      const blueprint = readBlueprintObject(config);
+      let blueprint = readBlueprintObject(config);
+      const skipGoogle =
+        process.argv.includes("--skip-google") ||
+        process.env.PUSH_SKIP_GOOGLE === "1";
+      if (skipGoogle) {
+        const skipIds = new Set([
+          config.googleSheets?.moduleId ?? 21,
+          config.emailReport?.moduleIds?.bodyAggregator ?? 22,
+          config.emailReport?.moduleIds?.sendEmail ?? 8062,
+        ]);
+        blueprint = {
+          ...blueprint,
+          flow: blueprint.flow.filter((module) => !skipIds.has(module.id)),
+        };
+        console.log(
+          `PUSH_SKIP_GOOGLE: omitting modules ${[...skipIds].join(", ")} (authorize Google/Gmail, then npm run push).`
+        );
+      }
       await updateScenarioBlueprint({
         scenarioId,
         blueprint,

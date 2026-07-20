@@ -4,7 +4,7 @@ Config-driven RSS aggregation scenario for construction and data-center industry
 
 | Item | Value |
 |------|-------|
-| Make scenario | Integration RSS (`5552982` on `us2.make.com`) |
+| Make scenario | Integration RSS (`6629790` on `eu1.make.com`; legacy `5552982` on `us2.make.com`) |
 | Schedule | 1st of each month, 09:00 IST |
 | Live feeds | 10 of 14 configured |
 | Google Sheet | Integration RSS - Trend Brief |
@@ -14,7 +14,8 @@ Config-driven RSS aggregation scenario for construction and data-center industry
 
 ```bash
 npm run validate-feeds    # HTTP + RSS + recency check (30 days)
-npm run push              # Deploy blueprint to Make.com
+npm run push              # Deploy full blueprint (needs authorized Google + Gmail)
+npm run push:core         # Deploy RSS + LLM only (omit Sheets/email until connections work)
 npm run run               # Trigger a test execution
 npm run executions        # View recent run stats
 ```
