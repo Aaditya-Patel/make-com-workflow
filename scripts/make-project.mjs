@@ -163,11 +163,13 @@ try {
     case "push": {
       const scenarioId = requireScenarioId(config);
       runNodeScript("sync-secrets.mjs");
+      runNodeScript("apply-datastore-config.mjs");
       runNodeScript("apply-batch-fix.mjs");
       runNodeScript("apply-azure-config.mjs");
       runNodeScript("apply-items-array-fix.mjs");
       runNodeScript("apply-bulk-sheets-fix.mjs");
       runNodeScript("apply-google-sheet-config.mjs");
+      runNodeScript("apply-email-report-fix.mjs");
       const blueprint = readBlueprintObject(config);
       await updateScenarioBlueprint({
         scenarioId,

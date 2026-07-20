@@ -4,12 +4,14 @@
     "maxResultsTier2": 20,
     "maxResultsTier3": 20,
     "maxResultsTier4": 20,
+    "mapCandidatesMax": 5,
     "filterDateFrom": "{{addDays(now; -30)}}"
   },
   "feeds": [
     {
       "id": 1,
       "aggId": 7,
+      "mapHttpId": 50,
       "name": "Construction Dive",
       "url": "https://www.constructiondive.com/feeds/news/",
       "tier": 1,
@@ -19,6 +21,7 @@
     {
       "id": 2,
       "aggId": 23,
+      "mapHttpId": 51,
       "name": "Data Center Dynamics",
       "url": "https://www.datacenterdynamics.com/en/atom/",
       "tier": 1,
@@ -28,6 +31,7 @@
     {
       "id": 3,
       "aggId": 24,
+      "mapHttpId": 52,
       "name": "ENR",
       "url": "https://www.enr.com/rss/articles",
       "tier": 1,
@@ -39,6 +43,7 @@
     {
       "id": 4,
       "aggId": 25,
+      "mapHttpId": 53,
       "name": "Data Center Knowledge",
       "url": "https://www.datacenterknowledge.com/rss.xml",
       "tier": 1,
@@ -48,6 +53,7 @@
     {
       "id": 5,
       "aggId": 26,
+      "mapHttpId": 54,
       "name": "BDC Network",
       "url": "https://www.bdcnetwork.com/rss.xml",
       "tier": 2,
@@ -58,6 +64,7 @@
     {
       "id": 6,
       "aggId": 27,
+      "mapHttpId": 55,
       "name": "Construction Exec",
       "url": "https://www.constructionexec.com/rss",
       "tier": 2,
@@ -67,6 +74,7 @@
     {
       "id": 10,
       "aggId": 28,
+      "mapHttpId": 56,
       "name": "The Construction Index",
       "url": "https://www.theconstructionindex.co.uk/news/rss",
       "tier": 2,
@@ -76,6 +84,7 @@
     {
       "id": 11,
       "aggId": 29,
+      "mapHttpId": 57,
       "name": "GlobeSt",
       "url": "https://feeds.feedblitz.com/globest/washington-dc",
       "tier": 2,
@@ -87,6 +96,7 @@
     {
       "id": 12,
       "aggId": 30,
+      "mapHttpId": 58,
       "name": "Autodesk News",
       "url": "https://adsknews.autodesk.com/feed",
       "tier": 3,
@@ -97,6 +107,7 @@
     {
       "id": 13,
       "aggId": 31,
+      "mapHttpId": 59,
       "name": "Trimble News",
       "url": "https://www.trimble.com/en/news/rss",
       "tier": 3,
@@ -107,6 +118,7 @@
     {
       "id": 15,
       "aggId": 32,
+      "mapHttpId": 60,
       "name": "Bentley News",
       "url": "https://investors.bentley.com/rss/news-releases.xml",
       "tier": 3,
@@ -117,6 +129,7 @@
     {
       "id": 16,
       "aggId": 33,
+      "mapHttpId": 61,
       "name": "Construction Dive Technology",
       "url": "https://www.constructiondive.com/feeds/topic/technology/",
       "tier": 4,
@@ -127,6 +140,7 @@
     {
       "id": 17,
       "aggId": 34,
+      "mapHttpId": 62,
       "name": "For Construction Pros",
       "url": "https://www.forconstructionpros.com/rss",
       "tier": 4,
@@ -137,6 +151,7 @@
     {
       "id": 43,
       "aggId": 35,
+      "mapHttpId": 63,
       "name": "Buildings.com",
       "url": "https://www.buildings.com/rss",
       "tier": 4,

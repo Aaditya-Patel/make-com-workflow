@@ -8,6 +8,7 @@ Config-driven RSS aggregation scenario for construction and data-center industry
 | Schedule | 1st of each month, 09:00 IST |
 | Live feeds | 10 of 14 configured |
 | Google Sheet | Integration RSS - Trend Brief |
+| LLM pattern | **Map-reduce** — 1 Azure call per feed + 1 merge call |
 
 ## Commands
 
@@ -17,6 +18,50 @@ npm run push              # Deploy blueprint to Make.com
 npm run run               # Trigger a test execution
 npm run executions        # View recent run stats
 ```
+
+---
+
+## Map-reduce processing (Option A)
+
+Each run:
+
+1. **Setup** — RunAt timestamp + Azure API key from Data Store  
+2. **Per enabled feed** — RSS (`maxResults`, last 30 days) → Text Aggregator → **map** Azure OpenAI call (up to `mapCandidatesMax` local candidates, default **5**)  
+3. **Merge** — one Azure OpenAI call over all map JSON outputs → global Top ≤10 `items[]`  
+4. **Output** — cleanJSON → ParseJSON → Iterator → Google Sheets rows (A–P)  
+5. **Email report** — Text Aggregator builds a ranked summary → Gmail **Send an Email** to the configured recipient (one email per run)
+
+| Stage | LLM calls | Prompt templates |
+|-------|-----------|------------------|
+| Map | N (= live feeds, currently 10) | [`prompts/map.txt`](prompts/map.txt) |
+| Merge | 1 | [`prompts/merge.txt`](prompts/merge.txt) |
+| **Total** | **N + 1** | — |
+
+### Email report setup
+
+Configured in `make.project.json` → `emailReport`:
+
+- **To:** `aditya.patel@kenexai.com`
+- **From:** `stackinfraworkflow@gmail.com`
+- **Requires:** a Make **Gmail** connection (`google-restricted`), separate from the Google Sheets connection (`9717356`)
+
+The Sheets Google connection only has Drive/Sheets scopes and **cannot** send Gmail. Create a Gmail connection once:
+
+1. Make → **Connections** → **Create a connection** → **Gmail** (or Email → Google Restricted)
+2. Sign in as `stackinfraworkflow@gmail.com` and allow Gmail send access
+3. Run `npm run connections`, copy the new Gmail connection **id**
+4. Set `emailReport.connectionId` in `make.project.json`
+5. `npm run push`
+
+Docs: [Gmail](https://apps.make.com/google-email) · [Email](https://apps.make.com/email)
+
+Config knobs in `feeds.config.json`:
+
+- `maxResultsTier1`…`4` — articles pulled per feed  
+- `mapCandidatesMax` — shortlist size per map call  
+- `mapHttpId` (50–63) — Make module id for that feed’s map HTTP  
+
+Sheet contract is unchanged: up to 10 ranked products, not one row per article.
 
 ---
 

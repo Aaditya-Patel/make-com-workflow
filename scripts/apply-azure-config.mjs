@@ -80,35 +80,47 @@ function normalizeRequestBody(jsonBody) {
   return body;
 }
 
-const azure = getAzureConfig();
-const blueprint = JSON.parse(readFileSync(blueprintPath, "utf8"));
-const httpModule = blueprint.flow.find((module) => module.id === 8);
+function applyAzureToHttpModule(httpModule, azure) {
+  httpModule.mapper.url = buildAzureUrl(azure);
+  httpModule.mapper.headers = [
+    {
+      name: "api-key",
+      value: "{{9.value}}",
+    },
+    {
+      name: "content-type",
+      value: "application/json",
+    },
+  ];
 
-if (!httpModule) {
-  throw new Error("HTTP module (id 8) not found in blueprint.");
+  if (httpModule.mapper.jsonStringBodyContent) {
+    httpModule.mapper.jsonStringBodyContent = normalizeRequestBody(
+      httpModule.mapper.jsonStringBodyContent
+    );
+  }
 }
 
-httpModule.mapper.url = buildAzureUrl(azure);
-httpModule.mapper.headers = [
-  {
-    name: "api-key",
-    value: "{{9.value}}",
-  },
-  {
-    name: "content-type",
-    value: "application/json",
-  },
-];
+const azure = getAzureConfig();
+const blueprint = JSON.parse(readFileSync(blueprintPath, "utf8"));
+const httpModules = blueprint.flow.filter(
+  (module) => module.module === "http:MakeRequest"
+);
 
-if (httpModule.mapper.jsonStringBodyContent) {
-  httpModule.mapper.jsonStringBodyContent = normalizeRequestBody(
-    httpModule.mapper.jsonStringBodyContent
-  );
+if (httpModules.length === 0) {
+  throw new Error("No http:MakeRequest modules found in blueprint.");
+}
+
+for (const httpModule of httpModules) {
+  applyAzureToHttpModule(httpModule, azure);
 }
 
 writeFileSync(blueprintPath, `${JSON.stringify(blueprint, null, 4)}\n`, "utf8");
 
-console.log("Applied Azure OpenAI config to module 8:");
+console.log(
+  `Applied Azure OpenAI config to ${httpModules.length} HTTP module(s): ${httpModules
+    .map((module) => module.id)
+    .join(", ")}`
+);
 console.log(`  Endpoint:   ${azure.endpoint}`);
 console.log(`  Deployment: ${azure.deployment}`);
 console.log(`  API version: ${azure.apiVersion}`);
