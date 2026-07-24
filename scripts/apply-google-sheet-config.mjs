@@ -75,11 +75,17 @@ const config = getGoogleSheetsConfig(project);
 const spreadsheetId = await resolveSpreadsheetId(config);
 
 const blueprint = JSON.parse(readFileSync(blueprintPath, "utf8"));
-const sheetsModule = blueprint.flow.find((module) => module.id === config.moduleId);
+const sheetsModule =
+  blueprint.flow.find((module) => module.id === config.moduleId) ??
+  blueprint.flow.find((module) => module.module === "google-sheets:addRow");
 
 if (!sheetsModule) {
-  throw new Error(`Google Sheets module (id ${config.moduleId}) not found in blueprint.`);
+  throw new Error(
+    `Google Sheets module (id ${config.moduleId} or google-sheets:addRow) not found in blueprint.`
+  );
 }
+
+config.moduleId = sheetsModule.id;
 
 sheetsModule.parameters = {
   ...sheetsModule.parameters,
@@ -112,7 +118,7 @@ project.googleSheets = {
 };
 writeFileSync(projectPath, `${JSON.stringify(project, null, 2)}\n`, "utf8");
 
-console.log("Applied Google Sheets config to module 21:");
+console.log(`Applied Google Sheets config to module ${sheetsModule.id}:`);
 console.log(`  Spreadsheet: ${config.spreadsheetName}`);
 console.log(`  Spreadsheet ID: ${spreadsheetId}`);
 console.log(`  Sheet tab: ${config.sheetTab}`);

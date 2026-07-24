@@ -7,8 +7,14 @@ const blueprintPath = join(rootDir, "Integration RSS.blueprint.json");
 const feedsConfigPath = join(rootDir, "feeds.config.json");
 const mapPromptPath = join(rootDir, "prompts", "map.txt");
 const mergePromptPath = join(rootDir, "prompts", "merge.txt");
+const projectPath = join(rootDir, "make.project.json");
 
-const TAIL_MODULE_IDS = [8, 18, 19, 20, 21];
+const project = JSON.parse(readFileSync(projectPath, "utf8"));
+const sheetsModuleId = Number(project.googleSheets?.moduleId ?? 21);
+const emailAggId = Number(project.emailReport?.moduleIds?.bodyAggregator ?? 22);
+const sendEmailId = Number(project.emailReport?.moduleIds?.sendEmail ?? 8062);
+
+const TAIL_MODULE_IDS = [8, 18, 19, 20, sheetsModuleId, emailAggId, sendEmailId];
 const HEAD_MODULE_IDS = [14, 9];
 const AGGREGATOR_IDS = [7, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
 const MAP_HTTP_IDS = [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63];

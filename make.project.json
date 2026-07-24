@@ -2,7 +2,7 @@
   "zone": "eu1.make.com",
   "organizationId": 8419279,
   "teamId": 2178924,
-  "scenarioId": 6629790,
+  "scenarioId": 6632402,
   "scenarioName": "Integration RSS",
   "blueprintPath": "Integration RSS.blueprint.json",
   "scheduling": {
@@ -27,25 +27,25 @@
     "apiVersion": "2024-10-21",
     "region": "eastus"
   },
-  "notes": "eu1 scenario 6629790. After Google (9155028) and Gmail (9155029) are authorized in Credentials, run npm run push for Sheets + email modules. Until then use npm run push:core.",
+  "notes": "eu1 scenario 6632402. Sheet col Q = product_summary. Top 15 merge. Google 9155380, Gmail 9155418.",
   "googleSheets": {
     "spreadsheetName": "Integration RSS - Trend Brief",
     "spreadsheetId": "1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg",
     "sheetTab": "Sheet1",
-    "connectionId": 9155028,
-    "moduleId": 21
+    "connectionId": 9155380,
+    "moduleId": 8062
   },
   "emailReport": {
     "enabled": true,
     "to": "aditya.patel@kenexai.com",
     "from": "stackinfraworkflow@gmail.com",
-    "connectionId": 9155029,
-    "connectionLabel": "Gmail RSS",
+    "connectionId": 9155418,
+    "connectionLabel": "My Gmail connection",
     "subject": "Integration RSS Trend Brief — {{14.RunAt}}",
     "sheetUrl": "https://docs.google.com/spreadsheets/d/1z__AJxtecScgpU6kYeirA9z3NPHtJzYwo3nmiepiWjg/edit",
     "moduleIds": {
-      "bodyAggregator": 22,
-      "sendEmail": 8062
+      "bodyAggregator": 8063,
+      "sendEmail": 8064
     }
   }
 }

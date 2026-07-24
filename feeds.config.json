@@ -4,7 +4,7 @@
     "maxResultsTier2": 20,
     "maxResultsTier3": 20,
     "maxResultsTier4": 20,
-    "mapCandidatesMax": 5,
+    "mapCandidatesMax": 6,
     "filterDateFrom": "{{addDays(now; -30)}}"
   },
   "feeds": [

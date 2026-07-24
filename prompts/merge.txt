@@ -7,7 +7,7 @@ RSS FEEDS REFERENCE (use these exact names and URLs in feed_citation):
 {{FEED_REFERENCE}}
 
 YOUR TASK:
-Merge the candidates above into the Top 10 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.
+Merge the candidates above into the Top 15 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.
 
 MERGE RULES (apply in order):
 1. Deduplicate the same product/company mentioned across multiple feeds into one row.
@@ -20,8 +20,10 @@ MERGE RULES (apply in order):
 8. Do not include data center operations tools used post-construction.
 9. Deprioritize vendor-published-only claims unless they cite independent third-party deployments.
 10. Plain English throughout. No jargon. No superlatives.
-11. If fewer than 10 solid products remain after dedupe, return only what you find. Return at least 5 items whenever any candidates mention AI tools, vendors, or initiatives.
+11. If fewer than 15 solid products remain after dedupe, return only what you find. Return at least 5 items whenever any candidates mention AI tools, vendors, or initiatives.
 12. You may lightly adjust score notes for consistency after merge, but do not invent deployments not present in the candidates.
+13. product_summary MUST be 100-150 words for each final item: crisp, clear, to the point. Summarize what the product is and what it does. Prefer the strongest map-pass wording; refine for clarity after merge.
+14. named_contractors MUST list companies using or piloting the product (comma-separated), merging names across feeds. If none are named, use "Not named in source articles".
 
 SCORING fields on each final item:
 - ADOPTION / ROI / RECENCY each out of 10
@@ -36,6 +38,7 @@ Use this exact schema:
       "rank": 1,
       "product": "Product name and company",
       "category": "Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating",
+      "product_summary": "100-150 word crisp summary of what the product is and what it does",
       "adoption_score": 8,
       "adoption_note": "one sentence",
       "roi_score": 7,
@@ -44,11 +47,11 @@ Use this exact schema:
       "recency_note": "one sentence with date",
       "composite": 24,
       "key_evidence": "2-3 sentences",
-      "named_contractors": "comma-separated list",
+      "named_contractors": "Company A, Company B",
       "source": "publication, URL, date",
       "source_credibility": "Independently reported | Vendor-published only",
       "feed_citation": "Feed Name | https://feed-url.example"
     }
   ]
 }
-Include up to 10 items in items[].
+Include up to 15 items in items[].

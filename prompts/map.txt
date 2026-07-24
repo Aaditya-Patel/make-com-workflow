@@ -24,10 +24,12 @@ RULES:
 - Flag all vendor-published figures clearly.
 {{VENDOR_RULE}}
 - Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes.
+- product_summary MUST be 100-150 words: crisp, clear, to the point. Explain what the product is and give a general summary of what it does for construction / data center construction delivery. No hype, no filler.
+- named_contractors MUST list companies, contractors, owners, or enterprises the articles say are using or piloting the product (comma-separated). If none are named, use "Not named in source articles".
 - feed_citation MUST be exactly: "{{FEED_NAME}} | {{FEED_URL}}"
 - Plain English throughout. No jargon. No superlatives.
 - If no relevant AI products are found, return {"feed_name":"{{FEED_NAME}}","feed_url":"{{FEED_URL}}","candidates":[]}
-- Do NOT invent a global Top 10. Return a local shortlist of at most {{MAX_CANDIDATES}} candidates.
+- Do NOT invent a global Top 15. Return a local shortlist of at most {{MAX_CANDIDATES}} candidates.
 
 OUTPUT FORMAT (mandatory):
 Return ONLY one valid JSON object. No markdown, no text before or after.
@@ -39,6 +41,7 @@ Use this exact schema:
     {
       "product": "Product name and company",
       "category": "Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating",
+      "product_summary": "100-150 word crisp summary of what the product is and what it does",
       "adoption_score": 8,
       "adoption_note": "one sentence",
       "roi_score": 7,
@@ -47,7 +50,7 @@ Use this exact schema:
       "recency_note": "one sentence with date",
       "composite": 24,
       "key_evidence": "2-3 sentences",
-      "named_contractors": "comma-separated list",
+      "named_contractors": "Company A, Company B",
       "source": "publication, URL, date",
       "source_credibility": "Independently reported | Vendor-published only",
       "feed_citation": "{{FEED_NAME}} | {{FEED_URL}}"

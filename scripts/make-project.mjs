@@ -160,6 +160,24 @@ try {
       break;
     }
 
+    case "push:blueprint": {
+      const scenarioId = requireScenarioId(config);
+      runNodeScript("sync-secrets.mjs");
+      runNodeScript("apply-datastore-config.mjs");
+      const blueprint = readBlueprintObject(config);
+      await updateScenarioBlueprint({
+        scenarioId,
+        blueprint,
+        scheduling: config.scheduling,
+        name: config.scenarioName,
+      });
+      console.log(
+        `Pushed blueprint file as-is (no feed regenerator) -> scenario ${scenarioId}`
+      );
+      console.log(`Edit in browser: ${scenarioUrl(config, scenarioId)}`);
+      break;
+    }
+
     case "push": {
       const scenarioId = requireScenarioId(config);
       runNodeScript("sync-secrets.mjs");

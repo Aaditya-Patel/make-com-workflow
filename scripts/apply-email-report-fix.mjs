@@ -7,13 +7,21 @@ const blueprintPath = join(rootDir, "Integration RSS.blueprint.json");
 const projectPath = join(rootDir, "make.project.json");
 
 const ITERATOR_ID = 20;
-const SHEETS_ID = 21;
 const PARSE_ID = 19;
 const RUN_AT_ID = 14;
 const LEGACY_EMAIL_MODULE_ID = 64;
 
 function loadProject() {
   return JSON.parse(readFileSync(projectPath, "utf8"));
+}
+
+function findSheetsModule(blueprint, project) {
+  const configuredId = project.googleSheets?.moduleId;
+  if (configuredId != null) {
+    const byId = blueprint.flow.find((module) => module.id === Number(configuredId));
+    if (byId) return byId;
+  }
+  return blueprint.flow.find((module) => module.module === "google-sheets:addRow");
 }
 
 function requireEmailConfig(project) {
@@ -49,7 +57,9 @@ function isEmailModule(module, ids) {
     module.id === ids.sendEmail ||
     module.id === LEGACY_EMAIL_MODULE_ID ||
     module.module === "google-email:sendAnEmail" ||
-    module.module === "google-email:ActionSendEmail"
+    module.module === "google-email:ActionSendEmail" ||
+    (module.module === "util:TextAggregator" &&
+      Number(module.parameters?.feeder) === ITERATOR_ID)
   );
 }
 
@@ -62,6 +72,8 @@ function createEmailBodyAggregator(ids, designerY) {
     "</td></tr>",
     '<tr><td style="padding:16px 20px;">',
     '<p style="margin:0 0 12px;color:#526477;font-size:13px;"><strong style="color:#17324d;">Category:</strong> {{20.category}}</p>',
+    '<p style="margin:0 0 8px;color:#17324d;font-size:14px;font-weight:700;">Product summary</p>',
+    '<p style="margin:0 0 14px;color:#34495e;font-size:13px;line-height:1.55;">{{20.product_summary}}</p>',
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px;"><tr>',
     '<td width="25%" style="padding:10px 4px;text-align:center;background:#e8f1ff;border-right:4px solid #ffffff;"><div style="font-size:20px;font-weight:700;color:#1559a6;">{{20.composite}}</div><div style="font-size:11px;color:#526477;">COMPOSITE</div></td>',
     '<td width="25%" style="padding:10px 4px;text-align:center;background:#edf8f2;border-right:4px solid #ffffff;"><div style="font-size:20px;font-weight:700;color:#147a49;">{{20.adoption_score}}/10</div><div style="font-size:11px;color:#526477;">ADOPTION</div></td>',
@@ -74,7 +86,7 @@ function createEmailBodyAggregator(ids, designerY) {
     '<p style="margin:0 0 14px;color:#34495e;font-size:13px;line-height:1.55;"><strong>Recency:</strong> {{20.recency_note}}</p>',
     '<p style="margin:0 0 5px;color:#17324d;font-size:14px;font-weight:700;">Key evidence</p>',
     '<p style="margin:0 0 14px;color:#34495e;font-size:13px;line-height:1.55;">{{20.key_evidence}}</p>',
-    '<p style="margin:0 0 7px;color:#34495e;font-size:13px;line-height:1.5;"><strong style="color:#17324d;">Named contractors:</strong> {{20.named_contractors}}</p>',
+    '<p style="margin:0 0 7px;color:#34495e;font-size:13px;line-height:1.5;"><strong style="color:#17324d;">Companies using this product:</strong> {{20.named_contractors}}</p>',
     '<p style="margin:0 0 7px;color:#34495e;font-size:13px;line-height:1.5;"><strong style="color:#17324d;">Source:</strong> {{20.source}}</p>',
     '<p style="margin:0 0 7px;color:#34495e;font-size:13px;line-height:1.5;"><strong style="color:#17324d;">Source credibility:</strong> {{20.source_credibility}}</p>',
     '<p style="margin:0;color:#60758a;font-size:12px;line-height:1.5;"><strong>Citation:</strong> {{20.feed_citation}}</p>',
@@ -234,21 +246,23 @@ if (!email) {
 }
 
 const iterator = blueprint.flow.find((module) => module.id === ITERATOR_ID);
-const sheets = blueprint.flow.find((module) => module.id === SHEETS_ID);
+const sheets = findSheetsModule(blueprint, project);
 const parse = blueprint.flow.find((module) => module.id === PARSE_ID);
 const runAt = blueprint.flow.find((module) => module.id === RUN_AT_ID);
 
 if (!iterator || !sheets || !parse || !runAt) {
-  throw new Error("Modules 14, 19, 20, and 21 are required for the email report.");
+  throw new Error(
+    "Modules 14, 19, 20, and a Google Sheets addRow module are required for the email report."
+  );
 }
 
 const designerY = sheets.metadata?.designer?.y ?? 1000;
 const emailAgg = createEmailBodyAggregator(ids, designerY);
 const gmailSend = createGmailSendModule(email, ids, designerY);
 
-const sheetsIndex = blueprint.flow.findIndex((module) => module.id === SHEETS_ID);
+const sheetsIndex = blueprint.flow.findIndex((module) => module.id === sheets.id);
 if (sheetsIndex < 0) {
-  throw new Error("Google Sheets module 21 not found in flow.");
+  throw new Error("Google Sheets module not found in flow.");
 }
 
 blueprint.flow.splice(sheetsIndex + 1, 0, emailAgg, gmailSend);
