@@ -18,6 +18,7 @@
     "apply-google-sheet": "node scripts/apply-google-sheet-config.mjs",
     "apply-email-report": "node scripts/apply-email-report-fix.mjs",
     "apply-datastore": "node scripts/apply-datastore-config.mjs",
+    "audit": "node scripts/audit-run.mjs",
     "validate-feeds": "node scripts/validate-feeds.mjs",
     "validate-feeds:tier1": "node scripts/validate-feeds.mjs 1",
     "validate-feeds:tier2": "node scripts/validate-feeds.mjs 2",

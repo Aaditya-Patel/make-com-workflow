@@ -10,7 +10,7 @@ ARTICLE BATCH (this feed only):
 {{ARTICLE_BATCH}}
 
 YOUR TASK:
-Analyze ONLY the articles above and extract up to {{MAX_CANDIDATES}} AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.
+Analyze ONLY the articles above and extract up to {{MAX_CANDIDATES}} specific, named AI products, platforms, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.
 
 SCORING — score each product on three dimensions, each out of 10:
 - ADOPTION (1-10): How many named major contractors or owners are using it?
@@ -18,17 +18,22 @@ SCORING — score each product on three dimensions, each out of 10:
 - RECENCY (1-10): How recent is the deployment or announcement?
 - composite MUST equal adoption_score + roi_score + recency_score
 
+HARD REQUIREMENTS (violating any of these makes the output unusable):
+1. Every candidate MUST be a specific, named commercial product, platform, or service from an identifiable vendor. Format the product field exactly as "Product Name (Vendor)" — for example "OpenSpace Capture (OpenSpace)" or "Construction IQ (Autodesk)". If the article only names a vendor with a clearly identified AI offering, use "Vendor AI offering (Vendor)" with the offering named as in the article.
+2. Generic capabilities, trends, or categories are FORBIDDEN as candidates. Never output entries like "AI scheduling", "Power-demand forecasting", "Machine learning for safety", or "Digital twins". If the articles only discuss a trend without naming a product, there is no candidate.
+3. The source field MUST contain the URL copied VERBATIM from the "URL:" line of the ONE article in the batch above that best supports this product. Never construct, shorten, guess, or merge URLs. If no single article URL in the batch supports the product, DROP the candidate.
+4. If no articles name a qualifying product, return {"feed_name":"{{FEED_NAME}}","feed_url":"{{FEED_URL}}","candidates":[]}. An empty list is a correct and expected answer. Do not pad.
+
 RULES:
 - Only include products directly used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.
 - Do not include data center operations tools used post-construction.
 - Flag all vendor-published figures clearly.
 {{VENDOR_RULE}}
-- Base the ranking on the evidence in the articles. Prefer named, confirmed deployments, but you may also include AI products, vendors, or clear trends that the articles mention or strongly imply, marking weaker evidence in the notes.
-- product_summary MUST be 100-150 words: crisp, clear, to the point. Explain what the product is and give a general summary of what it does for construction / data center construction delivery. No hype, no filler.
+- Base everything on the evidence in the articles. Prefer named, confirmed deployments. Mark weaker evidence clearly in the notes.
+- product_summary MUST be 100-150 words: crisp, clear, to the point. Explain what the product is and give a general summary of what it does for construction / data center construction delivery. No hype, no filler. Only state facts supported by the articles or widely known, uncontroversial facts about the named product.
 - named_contractors MUST list companies, contractors, owners, or enterprises the articles say are using or piloting the product (comma-separated). If none are named, use "Not named in source articles".
 - feed_citation MUST be exactly: "{{FEED_NAME}} | {{FEED_URL}}"
 - Plain English throughout. No jargon. No superlatives.
-- If no relevant AI products are found, return {"feed_name":"{{FEED_NAME}}","feed_url":"{{FEED_URL}}","candidates":[]}
 - Do NOT invent a global Top 15. Return a local shortlist of at most {{MAX_CANDIDATES}} candidates.
 
 OUTPUT FORMAT (mandatory):
@@ -39,7 +44,7 @@ Use this exact schema:
   "feed_url": "{{FEED_URL}}",
   "candidates": [
     {
-      "product": "Product name and company",
+      "product": "Product Name (Vendor)",
       "category": "Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating",
       "product_summary": "100-150 word crisp summary of what the product is and what it does",
       "adoption_score": 8,
@@ -51,7 +56,7 @@ Use this exact schema:
       "composite": 24,
       "key_evidence": "2-3 sentences",
       "named_contractors": "Company A, Company B",
-      "source": "publication, URL, date",
+      "source": "publication name, exact article URL copied from the URL: line above, article date",
       "source_credibility": "Independently reported | Vendor-published only",
       "feed_citation": "{{FEED_NAME}} | {{FEED_URL}}"
     }

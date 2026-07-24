@@ -7,23 +7,27 @@ RSS FEEDS REFERENCE (use these exact names and URLs in feed_citation):
 {{FEED_REFERENCE}}
 
 YOUR TASK:
-Merge the candidates above into the Top 15 AI products, solutions, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.
+Merge the candidates above into up to the Top 15 specific, named AI products, platforms, or services currently being adopted by data center construction companies or real estate construction companies working on data center builds.
+
+HARD REQUIREMENTS (violating any of these makes the output unusable):
+1. Every final item MUST be a specific, named commercial product, platform, or service with an identifiable vendor, formatted exactly "Product Name (Vendor)". DROP any candidate that is a generic capability, trend, or category (e.g. "AI scheduling", "Power-demand forecasting", "Machine learning for safety") — do not repair or rename it into a product.
+2. The source field of each final item MUST reuse a URL that appears VERBATIM in one of the candidate blocks above. Never construct, shorten, edit, or guess URLs. If a candidate has no verbatim article URL, drop that candidate.
+3. There is NO minimum item count. Fewer, well-evidenced named products are strictly better than padded vague entries. If only 3 qualify, return 3. If none qualify, return {"items":[]}.
 
 MERGE RULES (apply in order):
 1. Deduplicate the same product/company mentioned across multiple feeds into one row.
 2. Prefer higher composite scores (adoption_score + roi_score + recency_score).
 3. When scores are close, prefer Independently reported over Vendor-published only.
-4. When merging duplicates, combine evidence and set feed_citation to every supporting feed (semicolon-separated), using exact name | URL pairs from RSS FEEDS REFERENCE.
+4. When merging duplicates, combine evidence, keep the strongest supporting article URL verbatim in source, and set feed_citation to every supporting feed (semicolon-separated), using exact name | URL pairs from RSS FEEDS REFERENCE.
 5. Reassign global rank 1..N after sorting. Do not keep per-feed order.
 6. Prefer named, confirmed deployments and harder ROI numbers as tie-breakers.
 7. Only include products used in construction delivery: scheduling, site monitoring, safety, document AI, estimating, BIM, field operations.
 8. Do not include data center operations tools used post-construction.
 9. Deprioritize vendor-published-only claims unless they cite independent third-party deployments.
 10. Plain English throughout. No jargon. No superlatives.
-11. If fewer than 15 solid products remain after dedupe, return only what you find. Return at least 5 items whenever any candidates mention AI tools, vendors, or initiatives.
-12. You may lightly adjust score notes for consistency after merge, but do not invent deployments not present in the candidates.
-13. product_summary MUST be 100-150 words for each final item: crisp, clear, to the point. Summarize what the product is and what it does. Prefer the strongest map-pass wording; refine for clarity after merge.
-14. named_contractors MUST list companies using or piloting the product (comma-separated), merging names across feeds. If none are named, use "Not named in source articles".
+11. You may lightly adjust score notes for consistency after merge, but do not invent deployments not present in the candidates.
+12. product_summary MUST be 100-150 words for each final item: crisp, clear, to the point. Summarize what the product is and what it does. Prefer the strongest map-pass wording; refine for clarity after merge. Only state facts supported by the candidates.
+13. named_contractors MUST list companies using or piloting the product (comma-separated), merging names across feeds. If none are named, use "Not named in source articles".
 
 SCORING fields on each final item:
 - ADOPTION / ROI / RECENCY each out of 10
@@ -36,7 +40,7 @@ Use this exact schema:
   "items": [
     {
       "rank": 1,
-      "product": "Product name and company",
+      "product": "Product Name (Vendor)",
       "category": "Schedule & planning | Site intelligence | Safety AI | Document & contract AI | Platform PM | Estimating",
       "product_summary": "100-150 word crisp summary of what the product is and what it does",
       "adoption_score": 8,
@@ -48,10 +52,10 @@ Use this exact schema:
       "composite": 24,
       "key_evidence": "2-3 sentences",
       "named_contractors": "Company A, Company B",
-      "source": "publication, URL, date",
+      "source": "publication name, exact article URL carried over verbatim from a candidate, article date",
       "source_credibility": "Independently reported | Vendor-published only",
       "feed_citation": "Feed Name | https://feed-url.example"
     }
   ]
 }
-Include up to 15 items in items[].
+Include up to 15 items in items[]. Never pad to reach 15.
